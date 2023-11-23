@@ -1,7 +1,5 @@
 package com.example.demo.model.champions;
 
-import java.util.ArrayList;
-
 public class Champion {
     private String id;
     private String key;

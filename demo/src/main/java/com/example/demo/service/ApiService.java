@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.model.champions.AllChampionsData;
+import com.example.demo.model.versions.AllVersionsData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -15,9 +16,11 @@ public class ApiService{
         this.restTemplate = restTemplate;
     }
 
-    public AllChampionsData fetchData(String apiUrl){
+    public AllChampionsData fetchChampionsData(String apiUrl){
         return restTemplate.getForObject(apiUrl, AllChampionsData.class);
     }
 
-
+    public AllVersionsData fetchVersionData(){
+        return restTemplate.getForObject("https://ddragon.leagueoflegends.com/realms/na.json", AllVersionsData.class);
+    }
 }
