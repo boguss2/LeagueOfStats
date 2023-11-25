@@ -1,0 +1,13 @@
+body {
+    background: url('kayn.png') rgba(0, 0, 0, 0.814);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+@media (max-width: 991px) {
+    .sidebar {
+        background-color: rgba(0, 0, 0, 0.091);
+        backdrop-filter: blur(9px);
+    }
+}

@@ -37,7 +37,7 @@ public class ChampionsController {
             String formatedName= capitalize(name);
             ChampionData championData= apiService.fetchChampionData("https://ddragon.leagueoflegends.com/cdn/"+championsVersion+"/en_US/champion/"+formatedName+".json");
             ChampionDetails championDetails = championData.findChampion(formatedName);
-            model.addAttribute();
+            //model.addAttribute();
 
             return "infoChampion";
         }
