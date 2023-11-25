@@ -2,12 +2,12 @@ package com.example.demo.model.champions.single;
 
 import java.util.List;
 
-public class Spell {
+public class ChampionSpell {
     private String id;
     private String name;
     private String description;
     private String tooltip;
-    private LevelTip leveltip;
+    private ChampionLevelTip leveltip;
     private int maxrank;
     private List<Double> cooldown;
     private String cooldownBurn;
@@ -15,12 +15,12 @@ public class Spell {
     private String costBurn;
     private List<List<Double>> effect;
     private List<String> effectBurn;
-    private List<Var> vars;
+    private List<ChampionSpellVar> vars;
     private String costType;
     private String maxammo;
     private List<Integer> range;
     private String rangeBurn;
-    private Image image;
+    private ChampionImage image;
     private String resource;
 
     public String getId() {
@@ -39,7 +39,7 @@ public class Spell {
         return tooltip;
     }
 
-    public LevelTip getLeveltip() {
+    public ChampionLevelTip getLeveltip() {
         return leveltip;
     }
 
@@ -71,7 +71,7 @@ public class Spell {
         return effectBurn;
     }
 
-    public List<Var> getVars() {
+    public List<ChampionSpellVar> getVars() {
         return vars;
     }
 
@@ -91,7 +91,7 @@ public class Spell {
         return rangeBurn;
     }
 
-    public Image getImage() {
+    public ChampionImage getImage() {
         return image;
     }
 

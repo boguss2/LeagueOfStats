@@ -1,6 +1,6 @@
 package com.example.demo.model.champions.single;
 
-public class Image {
+public class ChampionImage {
     private String full;
     private String sprite;
     private String group;

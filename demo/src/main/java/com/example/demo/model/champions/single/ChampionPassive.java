@@ -1,9 +1,9 @@
 package com.example.demo.model.champions.single;
 
-public class Passive {
+public class ChampionPassive {
     private String name;
     private String description;
-    private Image image;
+    private ChampionImage image;
 
     public String getName() {
         return name;
@@ -13,7 +13,7 @@ public class Passive {
         return description;
     }
 
-    public Image getImage() {
+    public ChampionImage getImage() {
         return image;
     }
 }
