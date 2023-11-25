@@ -1,10 +1,36 @@
 <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Title</title>
-    </head>
-    <body>
+<html lang="en">
 
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strona Domowa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+
+<body>
+<header>
+    <h1>Strona Domowa</h1>
+</header>
+
+<nav>
+    <button onclick="navigateTo('mainChampions.html')">Champions</button>
+    <button onclick="navigateTo('mainRunes.html')">Runes</button>
+    <button onclick="navigateTo('mainItems.html')">Items</button>
+</nav>
+
+<div id="search-container">
+    <label for="long-input">Name:</label>
+    <input type="text" id="long-input" placeholder="Wpisz coś...">
+
+    <label for="short-input">Tag:</label>
+    <input type="text" id="short-input" placeholder="#EUW">
+
+    <button onclick="performSearch()">Szukaj</button>
+</div>
+<script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+
 </html>
