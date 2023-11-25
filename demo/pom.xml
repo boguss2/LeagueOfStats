@@ -27,7 +27,6 @@
 			<artifactId>webjars-locator</artifactId>
 			<version>0.39</version>
 		</dependency>
-
 		<!-- Zależność Bootstrap z Webjars -->
 		<dependency>
 			<groupId>org.webjars</groupId>
