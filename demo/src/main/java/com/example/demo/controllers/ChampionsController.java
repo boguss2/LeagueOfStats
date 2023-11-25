@@ -19,7 +19,11 @@ public class ChampionsController {
     private ApiService apiService;
 
     @GetMapping("/champions")
-    public String championsMain(){
+    public String championsMain(Model model){
+        AllVersionsData versionsData = apiService.fetchVersionData();
+        String championsVersion = versionsData.getN().getChampion();
+        AllChampionsData championsData=apiService.fetchChampionsData("http://ddragon.leagueoflegends.com/cdn/"+championsVersion+"/data/en_US/champion.json");
+        model.addAttribute("championsData", championsData.getData());
         return "mainChampions";
     }
 
@@ -29,7 +33,6 @@ public class ChampionsController {
         //POBRANIE DANYCH Z API(wersja jest pobierana z NA)
         AllVersionsData versionsData = apiService.fetchVersionData();
         String championsVersion = versionsData.getN().getChampion();
-
         AllChampionsData championsData=apiService.fetchChampionsData("http://ddragon.leagueoflegends.com/cdn/"+championsVersion+"/data/en_US/champion.json");
 
         if(championsData.findChampion(name)!=null){
@@ -38,6 +41,12 @@ public class ChampionsController {
 
             //dodac do modelu wszystko do porownania
             model.addAttribute("championData", champion.getChampionData(formatedName));
+            model.addAttribute("championImage", champion.getChampionData(formatedName).getImage());
+            model.addAttribute("championSkins", champion.getChampionData(formatedName).getSkins());
+            model.addAttribute("championInfo", champion.getChampionData(formatedName).getInfo());
+            model.addAttribute("championStats", champion.getChampionData(formatedName).getStats());
+            model.addAttribute("championSpells", champion.getChampionData(formatedName).getSpells());
+            model.addAttribute("championPassive", champion.getChampionData(formatedName).getPassive());
 
             return "infoChampion";
         }
