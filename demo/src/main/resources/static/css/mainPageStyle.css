@@ -1,8 +1,9 @@
-body {
-    background: url('kayn.png') rgba(0, 0, 0, 0.814);
+body{
+    background: url('../backgrounds/kayn.png') rgba(0, 0, 0, 0.814);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+
 }
 
 @media (max-width: 991px) {
