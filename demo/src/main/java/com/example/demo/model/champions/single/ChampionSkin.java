@@ -1,6 +1,6 @@
 package com.example.demo.model.champions.single;
 
-public class Skin {
+public class ChampionSkin {
     private String id;
     private int num;
     private String name;

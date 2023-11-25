@@ -1,6 +1,6 @@
 package com.example.demo.model.champions.single;
 
-public class Stats {
+public class ChampionStats {
     private int hp;
     private int hpperlevel;
     private int mp;

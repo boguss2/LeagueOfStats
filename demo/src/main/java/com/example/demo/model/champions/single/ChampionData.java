@@ -1,33 +1,91 @@
 package com.example.demo.model.champions.single;
 
-import java.util.Map;
+import java.util.List;
 
 public class ChampionData {
-    private String type;
-    private String format;
-    private String version;
-    private Map<String, ChampionDetails> champions;
+    private String id;
+    private String key;
+    private String name;
+    private String title;
+    private ChampionImage image;
+    private List<ChampionSkin> skins;
+    private String lore;
+    private String blurb;
+    private List<String> allyTips;
+    private List<String> enemyTips;
+    private List<String> tags;
+    private String partype;
+    private ChampionInfo info;
+    private ChampionStats stats;
+    private List<ChampionSpell> spells;
+    private ChampionPassive passive;
+    private List<String> recommended;
 
-    public String getType() {
-        return type;
+    public String getId() {
+        return id;
     }
 
-    public String getFormat() {
-        return format;
+    public String getKey() {
+        return key;
     }
 
-    public String getVersion() {
-        return version;
+    public String getName() {
+        return name;
     }
 
-    public Map<String, ChampionDetails> getChampions() {
-        return champions;
+    public String getTitle() {
+        return title;
     }
 
-    public ChampionDetails findChampion(String name){
-        return getChampions().values().stream()
-                .filter(champion->champion.getName().equalsIgnoreCase(name))
-                .findFirst()
-                .orElse(null);
+    public ChampionImage getImage() {
+        return image;
+    }
+
+    public List<ChampionSkin> getSkins() {
+        return skins;
+    }
+
+    public String getLore() {
+        return lore;
+    }
+
+    public String getBlurb() {
+        return blurb;
+    }
+
+    public List<String> getAllyTips() {
+        return allyTips;
+    }
+
+    public List<String> getEnemyTips() {
+        return enemyTips;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public String getPartype() {
+        return partype;
+    }
+
+    public ChampionInfo getInfo() {
+        return info;
+    }
+
+    public ChampionStats getStats() {
+        return stats;
+    }
+
+    public List<ChampionSpell> getSpells() {
+        return spells;
+    }
+
+    public ChampionPassive getPassive() {
+        return passive;
+    }
+
+    public List<String> getRecommended() {
+        return recommended;
     }
 }

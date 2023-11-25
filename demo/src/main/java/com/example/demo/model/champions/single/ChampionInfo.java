@@ -1,6 +1,6 @@
 package com.example.demo.model.champions.single;
 
-public class Info {
+public class ChampionInfo {
     private int attack;
     private int defense;
     private int magic;

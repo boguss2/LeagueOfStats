@@ -2,7 +2,7 @@ package com.example.demo.model.champions.single;
 
 import java.util.List;
 
-public class LevelTip {
+public class ChampionLevelTip {
     private List<String> label;
     private List<String> effect;
 
