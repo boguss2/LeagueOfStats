@@ -1,9 +1,10 @@
-package com.example.demo.model.champions;
+package com.example.demo.model.champions.single;
 
-public class ChampionInfo {
+public class Info {
     private int attack;
     private int defense;
     private int magic;
+    private int difficulty;
 
     public int getAttack() {
         return attack;
@@ -20,6 +21,4 @@ public class ChampionInfo {
     public int getDifficulty() {
         return difficulty;
     }
-
-    private int difficulty;
 }

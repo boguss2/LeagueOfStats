@@ -1,4 +1,4 @@
-package com.example.demo.model.champions;
+package com.example.demo.model.champions.all;
 
 import java.util.Map;
 
@@ -25,9 +25,8 @@ public class AllChampionsData{
     }
 
     public Champion findChampion(String name){
-        return getData().entrySet().stream()
-                .filter(entry -> entry.getValue().getName().equalsIgnoreCase(name))
-                .map(Map.Entry::getValue)
+        return getData().values().stream()
+                .filter(champion -> champion.getName().equalsIgnoreCase(name))
                 .findFirst()
                 .orElse(null);
     }

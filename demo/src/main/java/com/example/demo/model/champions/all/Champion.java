@@ -1,4 +1,4 @@
-package com.example.demo.model.champions;
+package com.example.demo.model.champions.all;
 
 public class Champion {
     private String id;

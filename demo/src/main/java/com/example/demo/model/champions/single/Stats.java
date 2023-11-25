@@ -1,6 +1,6 @@
-package com.example.demo.model.champions;
+package com.example.demo.model.champions.single;
 
-public class ChampionStats {
+public class Stats {
     private int hp;
     private int hpperlevel;
     private int mp;
@@ -12,6 +12,15 @@ public class ChampionStats {
     private int spellblockperlevel;
     private int attackrange;
     private double hpregen;
+    private double hpregenperlevel;
+    private double mpregen;
+    private double mpregenperlevel;
+    private int crit;
+    private int critperlevel;
+    private int attackdamage;
+    private double attackdamageperlevel;
+    private double attackspeedperlevel;
+    private double attackspeed;
 
     public int getHp() {
         return hp;
@@ -81,7 +90,7 @@ public class ChampionStats {
         return attackdamage;
     }
 
-    public int getAttackdamageperlevel() {
+    public double getAttackdamageperlevel() {
         return attackdamageperlevel;
     }
 
@@ -92,14 +101,4 @@ public class ChampionStats {
     public double getAttackspeed() {
         return attackspeed;
     }
-
-    private double hpregenperlevel;
-    private double mpregen;
-    private double mpregenperlevel;
-    private int crit;
-    private int critperlevel;
-    private int attackdamage;
-    private int attackdamageperlevel;
-    private double attackspeedperlevel;
-    private double attackspeed;
 }
