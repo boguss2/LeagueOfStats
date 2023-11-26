@@ -15,7 +15,7 @@
     <div class="container">
 
         <!--Logo-->
-        <a class="navbar-brand fs-4" href="#">LeagueOfStats</a>
+        <a class="navbar-brand fs-4" th:href="@{/}">LeagueOfStats</a>
 
         <!--Toggle Button-->
         <button class="navbar-toggler shadow-none border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
@@ -35,16 +35,16 @@
             <div class="offcanvas-body d-flex flex-column flex-lg-row p-4">
                 <ul class="navbar-nav justify-content-center align-items-center fs-5 flex-grow-1 pe-3">
                     <li class="nav-item mx-2">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
                     </li>
                     <li class="nav- mx-2">
-                        <a class="nav-link" th:href="@{/mainChampions.html}">Champions</a>
+                        <a class="nav-link" th:href="@{/champions}">Champions</a>
                     </li>
                     <li class="nav- mx-2">
-                        <a class="nav-link" href="#">Link</a>
+                        <a class="nav-link" th:href="@{/items}">Items</a>
                     </li>
                     <li class="nav- mx-2">
-                        <a class="nav-link" href="#">Link</a>
+                        <a class="nav-link" th:href="@{/runes}">Runes</a>
                     </li>
                 </ul>
             </div>
