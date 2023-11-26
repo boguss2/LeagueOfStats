@@ -28,7 +28,6 @@ public class ItemsController {
     @GetMapping("/items")
     public String itemsMain(Model model) {
         String itemsVersion = versionsData.getN().getItem();
-
         AllItemsData itemsData = apiService.fetchItemsData("http://ddragon.leagueoflegends.com/cdn/" + itemsVersion + "/data/en_US/item.json");
 
         model.addAttribute("itemsData", itemsData.getData());
@@ -40,10 +39,9 @@ public class ItemsController {
 
         //POBRANIE DANYCH Z API(wersja jest pobierana z NA)
         String itemsVersion = versionsData.getN().getItem();
-
         AllItemsData itemsData = apiService.fetchItemsData("http://ddragon.leagueoflegends.com/cdn/" + itemsVersion + "/data/en_US/item.json");
-        Data item = itemsData.findItem(name);
 
+        Data item = itemsData.findItem(name);
         if (item!= null) {
             //dodac do modelu wszystko do porownania
 //            model.addAttribute("championData", champion.getChampionData(formatedName));

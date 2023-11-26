@@ -1,5 +1,6 @@
 package com.example.demo.model.items;
 
+import java.util.List;
 import java.util.Map;
 
 public class AllItemsData {
@@ -8,7 +9,7 @@ public class AllItemsData {
     private Basic basic;
     private Map<String, Data> data;
 
-    private Map<String, Integer> groups;
+    private List<ItemGroup> groups;
 
     public String getType() {
         return type;
@@ -26,7 +27,7 @@ public class AllItemsData {
         return data;
     }
 
-    public Map<String, Integer> getGroups() {
+    public List<ItemGroup> getGroups() {
         return groups;
     }
 
