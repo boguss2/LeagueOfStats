@@ -41,13 +41,9 @@ public class ItemsController {
         Data item = itemsData.findItem(name);
         if (item!= null) {
             //dodac do modelu wszystko do porownania
-//            model.addAttribute("championData", champion.getChampionData(formatedName));
-//            model.addAttribute("championImage", champion.getChampionData(formatedName).getImage());
-//            model.addAttribute("championSkins", champion.getChampionData(formatedName).getSkins());
-//            model.addAttribute("championInfo", champion.getChampionData(formatedName).getInfo());
-//            model.addAttribute("championStats", champion.getChampionData(formatedName).getStats());
-//            model.addAttribute("championSpells", champion.getChampionData(formatedName).getSpells());
-//            model.addAttribute("championPassive", champion.getChampionData(formatedName).getPassive());
+            model.addAttribute("itemData", item);
+            model.addAttribute("itemGold", item.getGold());
+            model.addAttribute("itemImage", item.getImage());
 
             return "infoItem";
         } else {

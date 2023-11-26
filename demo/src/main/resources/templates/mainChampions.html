@@ -3,27 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strona Domowa</title>
+    <title>Champions List</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/Champions.css}">
 </head>
 <body>
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-<!-- wyswietlanie wszystkich ludzikow, sortowanie po klasie, klikalne obrazki, odnośniki do stron postaci -->
+<!-- sortowanie po klasie, klikalne obrazki -->
 
 <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
 
 <ul id="myUL">
     <li th:each="entry: ${championsData}">
-        <span class="champion-name" th:text="${entry.key}"></span>:
+        <span class="champion-name" th:text="${entry.value.id}" th:href="@{'/champions/' + ${entry.value.id}}"></span>:
         <span th:each="tag, tagStatus : ${entry.value.tags}">
             <span th:text="${tag}"></span><span th:if="${!tagStatus.last}">, </span>
         </span>
     </li>
 </ul>
 
-<script th:src="@{/js/mainChampions.js}" defer></script>
+<script th:src="@{/js/mainList.js}" defer></script>
 
 </body>
 </html>

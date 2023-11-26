@@ -1,12 +1,25 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
 body {
     background-color: #1c1c1c;
     color: #ffffff;
-    margin: 0;
+    margin-bottom: 50px;
+    overflow: auto;
+    padding-bottom: 8%;
 }
 
 .container {
     max-height: 100vh;
     overflow-y: auto;
+    height: 100%; /* Added */
 }
 
 table {
@@ -23,8 +36,6 @@ th, td {
     padding: 10px;
     text-align: left;
 }
-
-
 
 #myInput {
     background-position: 10px 12px;
@@ -56,4 +67,3 @@ th, td {
 #myUL li a:hover:not(.header) {
     background-color: #eee;
 }
-

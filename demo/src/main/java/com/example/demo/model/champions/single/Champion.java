@@ -26,7 +26,7 @@ public class Champion {
 
     public ChampionData getChampionData(String name){
         return getData().values().stream()
-                .filter(champion->champion.getName().equalsIgnoreCase(name))
+                .filter(champion->champion.getId().equalsIgnoreCase(name))
                 .findFirst()
                 .orElse(null);
     }

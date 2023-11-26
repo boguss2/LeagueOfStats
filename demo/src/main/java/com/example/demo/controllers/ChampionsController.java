@@ -42,7 +42,7 @@ public class ChampionsController {
         AllChampionsData championsData=apiService.fetchChampionsData("http://ddragon.leagueoflegends.com/cdn/"+championsVersion+"/data/en_US/champion.json");
 
         if(championsData.findChampion(name)!=null){
-            String formatedName= capitalize(name);
+            String formatedName = name;
             Champion champion= apiService.fetchChampionData("https://ddragon.leagueoflegends.com/cdn/"+championsVersion+"/data/en_US/champion/"+formatedName+".json");
 
             //dodac do modelu wszystko do porownania

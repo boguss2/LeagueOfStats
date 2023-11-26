@@ -1,10 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/Champions.css}">
 </head>
-<body>
+<body class="vh-100 overflow-hidden">
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+<!--usunąć <text> z description-->
+<div class="container">
+    <h1 th:text="${itemData.name}"></h1>
+    <p th:text="${itemData.plaintext}"></p>
+    <p th:text="${itemGold.total}"></p>
+    <p th:text="${itemData.description}"></p>
 
+
+    <p th:text="${itemData.tags}"></p>
+    <p th:each="entry : ${itemData.stats.entrySet()}">
+    <span th:text="${entry.key}"></span>: <span th:text="${entry.value}"></span><br></p>
+    <p th:if="${itemData.effects != null}" th:text="${itemData.effects.Effect1Amount}"></p>
+
+
+
+</div>
+<script th:src="@{/js/mainList.js}" defer></script>
+<script th:src="@{/webjars/bootstrap/5.3.0/js/bootstrap.min.js}"></script>
 </body>
 </html>

@@ -1,15 +1,18 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+<!--  Galeria skinow, ikonki statow  -->
     <meta charset="UTF-8">
     <title th:text="${championData.name}">Title</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/Champions.css}">
 </head>
+<header>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+</header>
 <body class="vh-100 overflow-hidden">
-<div th:replace="fragments/navbar :: navbar"></div>
-
-<!-- TO DO: galeria skinów, zdjęcia abilitek skinów etc, staty na x lvlu, -->
 <div class="container">
+    <img th:src="${'https://ddragon.leagueoflegends.com/cdn/13.23.1/img/champion/' + championImage.full}">
     <h1 th:text="${championData.name}"></h1>
     <p th:text="${championData.title}"></p>
     <p th:text="${championData.lore}"></p>
@@ -19,9 +22,10 @@
         <span th:text="${championInfo.defense}"></span>
         <span th:text="${championInfo.difficulty}"></span>
     </p>
-    <img th:src="${championImage.sprite}" alt="Champion Sprite">
+
     <p th:text="${championData.tags}"></p>
     <p th:text="${championData.partype}"></p>
+<!-- https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/perk-images/statmods/ ikonki :D -->
     <table>
         <tr>
             <td>HP:</td>
@@ -84,12 +88,25 @@
             <td><span th:text="${championStats.attackspeedperlevel}"></span></td>
         </tr>
     </table>
-    <p th:text="${championPassive.name}"></p>
+
+
+    <img th:src="${'https://ddragon.leagueoflegends.com/cdn/13.23.1/img/passive/' + championPassive.image.full}">
+    <label>Name: </label><p th:text="${championPassive.name}"></p>
+    <label>Description: </label><p th:text="${championPassive.description}"></p>
+
     <div th:each="spell : ${championSpells}">
+        <img th:src="${'https://ddragon.leagueoflegends.com/cdn/13.23.1/img/spell/' + spell.image.full}">
         <p>Name: <span th:text="${spell.name}"></span></p>
         <p>Description: <span th:text="${spell.description}"></span></p>
     </div>
+
+    <div th:each="skin : ${championSkins}">
+        <p><span th:text="${skin.name}"></span></p>
+        <img id="skin" th:src="${'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/' + championData.id + '_' + skin.num + '.jpg'}">
+    </div>
 </div>
+
+<script th:src="@{/js/mainList.js}" defer></script>
 <script th:src="@{/webjars/bootstrap/5.3.0/js/bootstrap.min.js}"></script>
 </body>
 </html>
