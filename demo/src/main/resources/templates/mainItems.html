@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+<!-- wyswietlanie wszystkich ludzikow, sortowanie, klikalne obrazki, odnośniki do stron postaci -->
+<ul>
+    <li th:each="entry: ${itemsData}">
+        <span th:text="${entry.key}"></span> = <span th:text="${entry.value.name}"></span><span th:text="${entry.value.plaintext}"></span>
+    </li>
+</ul>
+
 
 </body>
 </html>
