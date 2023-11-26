@@ -1,3 +1,13 @@
+
+body {
+    background-color: #1c1c1c; /* Ciemne tło */
+    color: #ffffff; /* Biały kolor tekstu */
+}
+
+.container {
+    /* Dodatkowe stylizacje dla kontenera, jeśli potrzebujesz */
+}
+
 #myInput {
     background-position: 10px 12px; /* Position the search icon */
     background-repeat: no-repeat; /* Do not repeat the icon image */
@@ -29,3 +39,4 @@
 #myUL li a:hover:not(.header) {
     background-color: #eee; /* Add a hover effect to all links, except for headers */
 }
+
