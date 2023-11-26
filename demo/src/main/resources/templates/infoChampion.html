@@ -1,47 +1,102 @@
 <!DOCTYPE html>
-    <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <title>Title</title>
-    </head>
-    <body>
-<!--  TO DO: galeria skinów, zdjęcia abilitek skinów etc, staty na x lvlu,   -->
-        <span th:text="${championData.name}"></span><br>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${championData.name}">Title</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/Champions.css}">
+</head>
+<body class="vh-100 overflow-hidden">
+<div th:replace="fragments/navbar :: navbar"></div>
 
-        <span th:text="${championData.title}"></span><br>
+<!-- TO DO: galeria skinów, zdjęcia abilitek skinów etc, staty na x lvlu, -->
+<div class="container">
+    <h1 th:text="${championData.name}"></h1>
+    <p th:text="${championData.title}"></p>
+    <p th:text="${championData.lore}"></p>
 
-        <span th:text="${championData.lore}"></span><br>
-
+    <p>
         <span th:text="${championInfo.attack}"></span>
         <span th:text="${championInfo.magic}"></span>
         <span th:text="${championInfo.defense}"></span>
-        <span th:text="${championInfo.difficulty}"></span><br>
+        <span th:text="${championInfo.difficulty}"></span>
+    </p>
 
-        <span th:text="${championImage.sprite}"></span><br>
+    <img th:src="${championImage.sprite}" alt="Champion Sprite">
 
-        <span th:text="${championData.tags}"></span><br>
+    <p th:text="${championData.tags}"></p>
+    <p th:text="${championData.partype}"></p>
 
-        <span th:text="${championData.partype}"></span><br>
-
-        <p>HP: <span th:text="${championStats.hp}"></span></p>
-        <p>HP per level: <span th:text="${championStats.hpperlevel}"></span></p>
-        <p>HP regeneration: <span th:text="${championStats.hpregen}"></span></p>
-        <p>MP: <span th:text="${championStats.mp}"></span></p>
-        <p>MP per level: <span th:text="${championStats.mpperlevel}"></span></p>
-        <p>Movespeed: <span th:text="${championStats.movespeed}"></span></p>
-        <p>Armor: <span th:text="${championStats.armor}"></span></p>
-        <p>Armor per level: <span th:text="${championStats.armorperlevel}"></span></p>
-        <p>Spell block: <span th:text="${championStats.spellblock}"></span></p>
-        <p>Spell block per level: <span th:text="${championStats.spellblockperlevel}"></span></p>
-        <p>Attack range: <span th:text="${championStats.attackrange}"></span></p>
-        <p>HP regeneration: <span th:text="${championStats.hpregen}"></span></p>
-
-        <p>Passive: <span th:text="${championPassive.name}"></span><br></p>
-
-        <tr th:each="spell : ${championSpells}">
-            <td>Name: <span th:text="${spell.name}"></span><br></td>
-            <td>Description: <span th:text="${spell.description}"></span><br></td>
+    <table>
+        <tr>
+            <td>HP:</td>
+            <td><span th:text="${championStats.hp}"></span></td>
+            <td>HP per level:</td>
+            <td><span th:text="${championStats.hpperlevel}"></span></td>
         </tr>
+        <tr>
+            <td>MP:</td>
+            <td><span th:text="${championStats.mp}"></span></td>
+            <td>MP per level:</td>
+            <td><span th:text="${championStats.mpperlevel}"></span></td>
+        </tr>
+        <tr>
+            <td>Movespeed:</td>
+            <td><span th:text="${championStats.movespeed}"></span></td>
+            <td>Armor:</td>
+            <td><span th:text="${championStats.armor}"></span></td>
+        </tr>
+        <tr>
+            <td>Armor per level:</td>
+            <td><span th:text="${championStats.armorperlevel}"></span></td>
+            <td>Spell block:</td>
+            <td><span th:text="${championStats.spellblock}"></span></td>
+        </tr>
+        <tr>
+            <td>Spell block per level:</td>
+            <td><span th:text="${championStats.spellblockperlevel}"></span></td>
+            <td>Attack range:</td>
+            <td><span th:text="${championStats.attackrange}"></span></td>
+        </tr>
+        <tr>
+            <td>HP regeneration:</td>
+            <td><span th:text="${championStats.hpregen}"></span></td>
+            <td>HP regeneration per level:</td>
+            <td><span th:text="${championStats.hpregenperlevel}"></span></td>
+        </tr>
+        <tr>
+            <td>MP regeneration:</td>
+            <td><span th:text="${championStats.mpregen}"></span></td>
+            <td>MP regeneration per level:</td>
+            <td><span th:text="${championStats.mpregenperlevel}"></span></td>
+        </tr>
+        <tr>
+            <td>Critical Strike:</td>
+            <td><span th:text="${championStats.crit}"></span></td>
+            <td>Critical Strike per level:</td>
+            <td><span th:text="${championStats.critperlevel}"></span></td>
+        </tr>
+        <tr>
+            <td>Attack damage:</td>
+            <td><span th:text="${championStats.attackdamage}"></span></td>
+            <td>Attack damage per level:</td>
+            <td><span th:text="${championStats.attackdamageperlevel}"></span></td>
+        </tr>
+        <tr>
+            <td>Attack speed:</td>
+            <td><span th:text="${championStats.attackspeed}"></span></td>
+            <td>Attack speed per level:</td>
+            <td><span th:text="${championStats.attackspeedperlevel}"></span></td>
+        </tr>
+    </table>
 
-    </body>
+    <p th:text="${championPassive.name}"></p>
+
+    <div th:each="spell : ${championSpells}">
+        <p>Name: <span th:text="${spell.name}"></span></p>
+        <p>Description: <span th:text="${spell.description}"></span></p>
+    </div>
+</div>
+<script th:src="@{/webjars/bootstrap/5.3.0/js/bootstrap.min.js}"></script>
+</body>
 </html>
