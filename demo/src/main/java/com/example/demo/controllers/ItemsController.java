@@ -1,7 +1,5 @@
 package com.example.demo.controllers;
 
-import com.example.demo.model.champions.all.AllChampionsData;
-import com.example.demo.model.champions.single.Champion;
 import com.example.demo.model.items.AllItemsData;
 import com.example.demo.model.items.Data;
 import com.example.demo.model.versions.AllVersionsData;
@@ -12,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import static org.springframework.util.StringUtils.capitalize;
 
 @Controller
 public class ItemsController {
