@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.model.champions.all.AllChampionsData;
 import com.example.demo.model.champions.single.Champion;
+import com.example.demo.model.items.AllItemsData;
 import com.example.demo.model.versions.AllVersionsData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,5 +24,9 @@ public class ApiService{
     }
     public AllVersionsData fetchVersionData(){
         return restTemplate.getForObject("https://ddragon.leagueoflegends.com/realms/na.json", AllVersionsData.class);
+    }
+
+    public AllItemsData fetchItemsData(String apiUrl) {
+        return restTemplate.getForObject(apiUrl, AllItemsData.class);
     }
 }

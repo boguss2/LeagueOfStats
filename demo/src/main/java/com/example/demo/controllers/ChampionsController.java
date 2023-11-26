@@ -2,7 +2,6 @@ package com.example.demo.controllers;
 
 import com.example.demo.model.champions.all.AllChampionsData;
 import com.example.demo.model.champions.single.Champion;
-import com.example.demo.model.champions.single.ChampionData;
 import com.example.demo.model.versions.AllVersionsData;
 import com.example.demo.service.ApiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +17,18 @@ public class ChampionsController {
     @Autowired
     private ApiService apiService;
 
+    private final AllVersionsData versionsData;
+    @Autowired
+    public ChampionsController(ApiService apiService){
+        this.versionsData= apiService.fetchVersionData();
+    }
+
     @GetMapping("/champions")
     public String championsMain(Model model){
-        AllVersionsData versionsData = apiService.fetchVersionData();
         String championsVersion = versionsData.getN().getChampion();
+
         AllChampionsData championsData=apiService.fetchChampionsData("http://ddragon.leagueoflegends.com/cdn/"+championsVersion+"/data/en_US/champion.json");
+
         model.addAttribute("championsData", championsData.getData());
         return "mainChampions";
     }
@@ -31,8 +37,8 @@ public class ChampionsController {
     public String championsInfo(@PathVariable(value="champion") String name, Model model){
 
         //POBRANIE DANYCH Z API(wersja jest pobierana z NA)
-        AllVersionsData versionsData = apiService.fetchVersionData();
         String championsVersion = versionsData.getN().getChampion();
+
         AllChampionsData championsData=apiService.fetchChampionsData("http://ddragon.leagueoflegends.com/cdn/"+championsVersion+"/data/en_US/champion.json");
 
         if(championsData.findChampion(name)!=null){
@@ -60,10 +66,10 @@ public class ChampionsController {
     public String championsCompare(@PathVariable(value="champion1") String name1, @PathVariable(value="champion2") String name2, Model model){
 
         //POBRANIE DANYCH Z API(wersja jest pobierana z NA)
-        AllVersionsData versionsData = apiService.fetchVersionData();
         String championsVersion = versionsData.getN().getChampion();
 
         AllChampionsData championsData=apiService.fetchChampionsData("http://ddragon.leagueoflegends.com/cdn/"+championsVersion+"/data/en_US/champion.json");
+
         if(championsData.findChampion(name1)!=null && championsData.findChampion(name2)!=null){
             String formatedName1= capitalize(name1);
             Champion champion1 = apiService.fetchChampionData("https://ddragon.leagueoflegends.com/cdn/"+championsVersion+"/data/en_US/champion/"+formatedName1+".json");
