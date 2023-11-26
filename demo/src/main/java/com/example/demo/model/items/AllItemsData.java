@@ -8,6 +8,8 @@ public class AllItemsData {
     private Basic basic;
     private Map<String, Data> data;
 
+    private Map<String, Integer> groups;
+
     public String getType() {
         return type;
     }
@@ -22,5 +24,16 @@ public class AllItemsData {
 
     public Map<String, Data> getData() {
         return data;
+    }
+
+    public Map<String, Integer> getGroups() {
+        return groups;
+    }
+
+    public Data findItem(String name){
+        return getData().values().stream()
+                .filter(item -> item.getName().equalsIgnoreCase(name))
+                .findFirst()
+                .orElse(null);
     }
 }

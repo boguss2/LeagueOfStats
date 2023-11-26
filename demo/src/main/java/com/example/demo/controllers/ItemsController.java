@@ -3,6 +3,7 @@ package com.example.demo.controllers;
 import com.example.demo.model.champions.all.AllChampionsData;
 import com.example.demo.model.champions.single.Champion;
 import com.example.demo.model.items.AllItemsData;
+import com.example.demo.model.items.Data;
 import com.example.demo.model.versions.AllVersionsData;
 import com.example.demo.service.ApiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,13 +41,11 @@ public class ItemsController {
         //POBRANIE DANYCH Z API(wersja jest pobierana z NA)
         String itemsVersion = versionsData.getN().getItem();
 
-        AllChampionsData championsData = apiService.fetchChampionsData("http://ddragon.leagueoflegends.com/cdn/" + itemsVersion + "/data/en_US/item.json");
+        AllItemsData itemsData = apiService.fetchItemsData("http://ddragon.leagueoflegends.com/cdn/" + itemsVersion + "/data/en_US/item.json");
+        Data item = itemsData.findItem(name);
 
-        if (championsData.findChampion(name) != null) {
-            String formatedName = capitalize(name);
-//            Item item = apiService.fetchChampionData("https://ddragon.leagueoflegends.com/cdn/" + itemsVersion + "/data/en_US/item/" + formatedName + ".json");
-
-//            //dodac do modelu wszystko do porownania
+        if (item!= null) {
+            //dodac do modelu wszystko do porownania
 //            model.addAttribute("championData", champion.getChampionData(formatedName));
 //            model.addAttribute("championImage", champion.getChampionData(formatedName).getImage());
 //            model.addAttribute("championSkins", champion.getChampionData(formatedName).getSkins());
