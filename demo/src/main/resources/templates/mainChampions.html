@@ -8,10 +8,10 @@
     <link rel="stylesheet" th:href="@{/css/Champions.css}">
 </head>
 <body>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 
-<!-- wyswietlanie wszystkich ludzikow, sortowanie, klikalne obrazki, odnośniki do stron postaci -->
+<!-- wyswietlanie wszystkich ludzikow, sortowanie po klasie, klikalne obrazki, odnośniki do stron postaci -->
 
-<!-- Your Thymeleaf code -->
 <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
 
 <ul id="myUL">

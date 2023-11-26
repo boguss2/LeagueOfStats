@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -14,19 +13,15 @@
     <h1 th:text="${championData.name}"></h1>
     <p th:text="${championData.title}"></p>
     <p th:text="${championData.lore}"></p>
-
     <p>
         <span th:text="${championInfo.attack}"></span>
         <span th:text="${championInfo.magic}"></span>
         <span th:text="${championInfo.defense}"></span>
         <span th:text="${championInfo.difficulty}"></span>
     </p>
-
     <img th:src="${championImage.sprite}" alt="Champion Sprite">
-
     <p th:text="${championData.tags}"></p>
     <p th:text="${championData.partype}"></p>
-
     <table>
         <tr>
             <td>HP:</td>
@@ -89,9 +84,7 @@
             <td><span th:text="${championStats.attackspeedperlevel}"></span></td>
         </tr>
     </table>
-
     <p th:text="${championPassive.name}"></p>
-
     <div th:each="spell : ${championSpells}">
         <p>Name: <span th:text="${spell.name}"></span></p>
         <p>Description: <span th:text="${spell.description}"></span></p>
