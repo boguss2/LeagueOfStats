@@ -12,7 +12,7 @@
 </header>
 <body class="vh-100 overflow-hidden">
 <div class="container">
-    <img th:src="${'https://ddragon.leagueoflegends.com/cdn/13.23.1/img/champion/' + championImage.full}">
+    <img th:src="${'https://ddragon.leagueoflegends.com/cdn/' + version +'/img/champion/' + championImage.full}">
     <h1 th:text="${championData.name}"></h1>
     <p th:text="${championData.title}"></p>
     <p th:text="${championData.lore}"></p>
@@ -90,12 +90,12 @@
     </table>
 
 
-    <img th:src="${'https://ddragon.leagueoflegends.com/cdn/13.23.1/img/passive/' + championPassive.image.full}">
+    <img th:src="${'https://ddragon.leagueoflegends.com/cdn/' + version + '/img/passive/' + championPassive.image.full}">
     <label>Name: </label><p th:text="${championPassive.name}"></p>
     <label>Description: </label><p th:text="${championPassive.description}"></p>
 
     <div th:each="spell : ${championSpells}">
-        <img th:src="${'https://ddragon.leagueoflegends.com/cdn/13.23.1/img/spell/' + spell.image.full}">
+        <img th:src="${'https://ddragon.leagueoflegends.com/cdn/' + version + '/img/spell/' + spell.image.full}">
         <p>Name: <span th:text="${spell.name}"></span></p>
         <p>Description: <span th:text="${spell.description}"></span></p>
     </div>

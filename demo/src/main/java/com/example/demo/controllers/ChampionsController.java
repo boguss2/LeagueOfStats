@@ -46,6 +46,7 @@ public class ChampionsController {
             Champion champion= apiService.fetchChampionData("https://ddragon.leagueoflegends.com/cdn/"+championsVersion+"/data/en_US/champion/"+formatedName+".json");
 
             //dodac do modelu wszystko do porownania
+            model.addAttribute("version", championsVersion);
             model.addAttribute("championData", champion.getChampionData(formatedName));
             model.addAttribute("championImage", champion.getChampionData(formatedName).getImage());
             model.addAttribute("championSkins", champion.getChampionData(formatedName).getSkins());
