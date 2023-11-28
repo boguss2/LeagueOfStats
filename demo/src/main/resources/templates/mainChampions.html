@@ -6,24 +6,32 @@
     <title>Champions List</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/Champions.css}">
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
 </head>
 <body>
-<div th:replace="~{fragments/navbar :: navbar}"></div>
 
-<!-- sortowanie po klasie, klikalne obrazki -->
+<input type="text" id="myInput" oninput="filterNames()" placeholder="Search for names..">
 
-<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
+<select id="tagFilter">
+    <option value="all">All</option>
+    <option value="fighter">Fighter</option>
+    <option value="tank">Tank</option>
+    <option value="mage">Mage</option>
+</select>
 
 <ul id="myUL">
-    <li th:each="entry: ${championsData}">
-        <span class="champion-name" th:text="${entry.value.id}" th:href="@{'/champions/' + ${entry.value.id}}"></span>:
-        <span th:each="tag, tagStatus : ${entry.value.tags}">
-            <span th:text="${tag}"></span><span th:if="${!tagStatus.last}">, </span>
-        </span>
+    <li th:each="entry: ${championsData}" class="champion-item" data-classes="${entry.value.tags}">
+        <div class="champion">
+            <span class="champion-name" th:text="${entry.value.id}" th:href="@{'/champions/' + ${entry.value.id}}"></span>:
+            <span class="champion-classes">
+                <span th:each="tag, tagStatus : ${entry.value.tags}">
+                    <span th:text="${tag}"></span><span th:if="${!tagStatus.last}">, </span>
+                </span>
+            </span>
+        </div>
     </li>
 </ul>
 
-<script th:src="@{/js/mainList.js}" defer></script>
-
+<script th:src="@{/js/mainChampions.js}" defer></script>
 </body>
 </html>
