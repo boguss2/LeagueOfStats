@@ -54,6 +54,7 @@ public class ChampionsController {
             model.addAttribute("championStats", champion.getChampionData(formatedName).getStats());
             model.addAttribute("championSpells", champion.getChampionData(formatedName).getSpells());
             model.addAttribute("championPassive", champion.getChampionData(formatedName).getPassive());
+            model.addAttribute("championsData", championsData.getData());
 
             return "infoChampion";
         }
@@ -79,7 +80,13 @@ public class ChampionsController {
             Champion champion2 = apiService.fetchChampionData("https://ddragon.leagueoflegends.com/cdn/"+championsVersion+"/data/en_US/champion/"+formatedName2+".json");
 
             //dodac do modelu wszystko do porownania
-
+            model.addAttribute("version", championsVersion);
+            model.addAttribute("champion1Data", champion1.getChampionData(formatedName1));
+            model.addAttribute("champion2Data", champion2.getChampionData(formatedName2));
+            model.addAttribute("champion1Image", champion1.getChampionData(formatedName1).getImage());
+            model.addAttribute("champion2Image", champion2.getChampionData(formatedName2).getImage());
+            model.addAttribute("champion1Stats", champion1.getChampionData(formatedName1).getStats());
+            model.addAttribute("champion2Stats", champion2.getChampionData(formatedName2).getStats());
             return "compareChampions";
         }
         else{

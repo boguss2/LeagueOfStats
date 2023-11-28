@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<!--  Galeria skinow, ikonki statow  -->
+    <!--  Wyglad strony, Galeria skinow, ikonki statow? (z bootsrapa mozna) -->
     <meta charset="UTF-8">
     <title th:text="${championData.name}">Title</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}">
@@ -16,6 +16,19 @@
     <h1 th:text="${championData.name}"></h1>
     <p th:text="${championData.title}"></p>
     <p th:text="${championData.lore}"></p>
+
+    <p>Compare base stats</p>
+    <input type="text" id="myInput" class="search-bar" placeholder="Search for champions..." oninput="filterNames()">
+
+    <ul id="searchUL">
+        <li th:each="entry: ${championsData}" class="champion-item" data-classes="${entry.value.tags}">
+            <div class="champion">
+                <span class="champion-name" th:text="${entry.value.id}" th:href="@{'/champions/' + ${entry.value.id}}"></span>:
+                <span class="champion-classes"></span>
+            </div>
+        </li>
+    </ul>
+
     <p>
         <span th:text="${championInfo.attack}"></span>
         <span th:text="${championInfo.magic}"></span>
@@ -106,7 +119,7 @@
     </div>
 </div>
 
-<script th:src="@{/js/mainChampions.js}" defer></script>
+<script th:src="@{/js/infoChampion.js}" defer></script>
 <script th:src="@{/webjars/bootstrap/5.3.0/js/bootstrap.min.js}"></script>
 </body>
 </html>

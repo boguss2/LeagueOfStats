@@ -19,7 +19,23 @@ body {
 .container {
     max-height: 100vh;
     overflow-y: auto;
-    height: 100%; /* Added */
+    height: 100%;
+}
+
+.vs {
+    overflow-y: hidden;
+    max-width: 90%;
+}
+.comparison td {
+    padding: 5px;
+}
+
+.comparison .positive {
+    color: red;
+}
+
+.comparison .negative {
+    color: green;
 }
 
 table {
@@ -47,13 +63,31 @@ th, td {
     margin-bottom: 12px;
 }
 
+
 #myUL {
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
-#myUL li a {
+#myUL li {
+    border: 1px solid #ddd;
+    margin-top: -1px;
+    background-color: #444444;
+    padding: 12px;
+    text-decoration: none;
+    font-size: 18px;
+    color: black;
+    display: block;
+}
+
+#myUL li:hover {
+    background-color: #eee;
+    cursor: pointer;
+}
+
+
+#searchUL li {
     border: 1px solid #ddd;
     margin-top: -1px;
     background-color: #f6f6f6;
@@ -64,6 +98,7 @@ th, td {
     display: block;
 }
 
-#myUL li a:hover:not(.header) {
+#searchUL li:hover {
     background-color: #eee;
+    cursor: pointer;
 }

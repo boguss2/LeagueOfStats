@@ -1,11 +1,103 @@
 <!DOCTYPE html>
-  <html xmlns:th="http://www.thymeleaf.org">
-  <head>
-<!--   wszystko   -->
-      <meta charset="UTF-8">
-      <title>Title</title>
-  </head>
-  <body>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<!--    WYŚWIETLANIE i pozostale rzedy tabelki -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Champions List</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/Champions.css}">
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+</head>
+<body>
+<div class="vs">
+    <div class="row">
+        <div class="col-md-6 text-start">
+            <img th:src="${'https://ddragon.leagueoflegends.com/cdn/' + version +'/img/champion/' + champion1Image.full}">
+            <h1 th:text="${champion1Data.name}"></h1>
+            <p th:text="${champion1Data.title}"></p>
+        </div>
 
-  </body>
+        <div class="col-md-6 text-end">
+            <img th:src="${'https://ddragon.leagueoflegends.com/cdn/' + version +'/img/champion/' + champion2Image.full}">
+            <h1 th:text="${champion2Data.name}"></h1>
+            <p th:text="${champion2Data.title}"></p>
+        </div>
+    </div>
+</div>
+    <div class="row justify-content-center mt-4">
+        <table class="comparison">
+    <tr>
+        <td>HP:</td>
+        <td>
+            <span th:text="${champion1Stats.hp}"></span>
+            <span th:if="${champion1Stats.hp > champion2Stats.hp}" th:class="${'positive'}"> -<span th:text="${champion1Stats.hp - champion2Stats.hp}"></span></span>
+            <span th:if="${champion1Stats.hp < champion2Stats.hp}" th:class="${'negative'}"> +<span th:text="${champion2Stats.hp - champion1Stats.hp}"></span></span>
+        </td>
+        <td>HP per level:</td>
+        <td>
+            <span th:text="${champion1Stats.hpperlevel}"></span>
+            <span th:if="${champion1Stats.hpperlevel > champion2Stats.hpperlevel}" th:class="${'positive'}"> -<span th:text="${champion1Stats.hpperlevel - champion2Stats.hpperlevel}"></span></span>
+            <span th:if="${champion1Stats.hpperlevel < champion2Stats.hpperlevel}" th:class="${'negative'}"> +<span th:text="${champion2Stats.hpperlevel - champion1Stats.hpperlevel}"></span></span>
+        </td>
+    <tr>
+        <td>MP:</td>
+        <td><span th:text="${champion1Stats.mp}"></span></td>
+        <td>MP per level:</td>
+        <td><span th:text="${champion1Stats.mpperlevel}"></span></td>
+    </tr>
+    <tr>
+        <td>Movespeed:</td>
+        <td><span th:text="${champion1Stats.movespeed}"></span></td>
+        <td>Armor:</td>
+        <td><span th:text="${champion1Stats.armor}"></span></td>
+    </tr>
+    <tr>
+        <td>Armor per level:</td>
+        <td><span th:text="${champion1Stats.armorperlevel}"></span></td>
+        <td>Spell block:</td>
+        <td><span th:text="${champion1Stats.spellblock}"></span></td>
+    </tr>
+    <tr>
+        <td>Spell block per level:</td>
+        <td><span th:text="${champion1Stats.spellblockperlevel}"></span></td>
+        <td>Attack range:</td>
+        <td><span th:text="${champion1Stats.attackrange}"></span></td>
+    </tr>
+    <tr>
+        <td>HP regeneration:</td>
+        <td><span th:text="${champion1Stats.hpregen}"></span></td>
+        <td>HP regeneration per level:</td>
+        <td><span th:text="${champion1Stats.hpregenperlevel}"></span></td>
+    </tr>
+    <tr>
+        <td>MP regeneration:</td>
+        <td><span th:text="${champion1Stats.mpregen}"></span></td>
+        <td>MP regeneration per level:</td>
+        <td><span th:text="${champion1Stats.mpregenperlevel}"></span></td>
+    </tr>
+    <tr>
+        <td>Critical Strike:</td>
+        <td><span th:text="${champion1Stats.crit}"></span></td>
+        <td>Critical Strike per level:</td>
+        <td><span th:text="${champion1Stats.critperlevel}"></span></td>
+    </tr>
+    <tr>
+        <td>Attack damage:</td>
+        <td><span th:text="${champion1Stats.attackdamage}"></span></td>
+        <td>Attack damage per level:</td>
+        <td><span th:text="${champion1Stats.attackdamageperlevel}"></span></td>
+    </tr>
+    <tr>
+        <td>Attack speed:</td>
+        <td><span th:text="${champion1Stats.attackspeed}"></span></td>
+        <td>Attack speed per level:</td>
+        <td><span th:text="${champion1Stats.attackspeedperlevel}"></span></td>
+    </tr>
+</table>
+</div>
+
+
+<script th:src="@{/js/infoChampion.js}" defer></script>
+</body>
 </html>
