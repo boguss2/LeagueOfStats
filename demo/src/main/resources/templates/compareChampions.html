@@ -40,29 +40,55 @@
             <span th:if="${champion1Stats.hpperlevel > champion2Stats.hpperlevel}" th:class="${'positive'}"> -<span th:text="${champion1Stats.hpperlevel - champion2Stats.hpperlevel}"></span></span>
             <span th:if="${champion1Stats.hpperlevel < champion2Stats.hpperlevel}" th:class="${'negative'}"> +<span th:text="${champion2Stats.hpperlevel - champion1Stats.hpperlevel}"></span></span>
         </td>
-    <tr>
-        <td>MP:</td>
-        <td><span th:text="${champion1Stats.mp}"></span></td>
-        <td>MP per level:</td>
-        <td><span th:text="${champion1Stats.mpperlevel}"></span></td>
     </tr>
-    <tr>
-        <td>Movespeed:</td>
-        <td><span th:text="${champion1Stats.movespeed}"></span></td>
+
+        <tr>
+                <td>MP:</td>
+                <td>
+                    <span th:text="${champion1Stats.mp}"></span>
+                    <span th:if="${champion1Stats.mp > champion2Stats.mp}" th:class="${'positive'}"> -<span th:text="${champion1Stats.mp - champion2Stats.mp}"></span></span>
+                    <span th:if="${champion1Stats.mp < champion2Stats.mp}" th:class="${'negative'}"> +<span th:text="${champion2Stats.mp - champion1Stats.mp}"></span></span>
+                </td>
+                <td>MP per level:</td>
+                <td>
+                    <span th:text="${champion1Stats.mpperlevel}"></span>
+                    <span th:if="${champion1Stats.mpperlevel > champion2Stats.mpperlevel}" th:class="${'positive'}"> -<span th:text="${champion1Stats.mpperlevel - champion2Stats.mpperlevel}"></span></span>
+                    <span th:if="${champion1Stats.mpperlevel < champion2Stats.mpperlevel}" th:class="${'negative'}"> +<span th:text="${champion2Stats.mpperlevel - champion1Stats.mpperlevel}"></span></span>
+                </td>
+            </tr>
+
+            <tr>
+            <tr>
+            <td>Movespeed:</td>
+            <td>
+                <span th:text="${champion1Stats.movespeed}"></span>
+            </td>
+            <td>Attack range:</td>
+            <td><span th:text="${champion1Stats.attackrange}"></span></td>
+            </tr>
+
+            <tr>
+
         <td>Armor:</td>
         <td><span th:text="${champion1Stats.armor}"></span></td>
+                <td>Armor per level:</td>
+                <td><span th:text="${champion1Stats.armorperlevel}"></span></td>
     </tr>
     <tr>
-        <td>Armor per level:</td>
-        <td><span th:text="${champion1Stats.armorperlevel}"></span></td>
+
         <td>Spell block:</td>
         <td><span th:text="${champion1Stats.spellblock}"></span></td>
-    </tr>
-    <tr>
         <td>Spell block per level:</td>
         <td><span th:text="${champion1Stats.spellblockperlevel}"></span></td>
-        <td>Attack range:</td>
-        <td><span th:text="${champion1Stats.attackrange}"></span></td>
+    </tr>
+    <tr>
+
+        <td>MP per level:</td>
+        <td>
+            <span th:text="${champion1Stats.mpperlevel}"></span>
+            <span th:if="${champion1Stats.mpperlevel > champion2Stats.mpperlevel}" th:class="${'positive'}"> -<span th:text="${champion1Stats.mpperlevel - champion2Stats.mpperlevel}"></span></span>
+            <span th:if="${champion1Stats.mpperlevel < champion2Stats.mpperlevel}" th:class="${'negative'}"> +<span th:text="${champion2Stats.mpperlevel - champion1Stats.mpperlevel}"></span></span>
+        </td>
     </tr>
     <tr>
         <td>HP regeneration:</td>

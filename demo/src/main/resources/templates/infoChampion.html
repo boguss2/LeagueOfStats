@@ -39,34 +39,51 @@
     <p th:text="${championData.tags}"></p>
     <p th:text="${championData.partype}"></p>
 <!-- https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/perk-images/statmods/ ikonki :D -->
+    <label for="selectNumber">Select a level:</label>
+    <select id="selectNumber" name="selectNumber">
+        <option value="1" selected>Level 1</option>
+        <script th:inline="javascript">
+            var selectElement = document.getElementById("selectNumber");
+
+            for (var i = 2; i <= 18; i++) {
+                var option = document.createElement("option");
+                option.value = i;
+                option.textContent = "Level " + i;
+                selectElement.appendChild(option);
+            }
+        </script>
+    </select>
+
+    <br><br>
+
     <table>
         <tr>
             <td>HP:</td>
-            <td><span th:text="${championStats.hp}"></span></td>
+            <td><span id="hpValue" th:text="${championStats.hp}"></span></td>
             <td>HP per level:</td>
-            <td><span th:text="${championStats.hpperlevel}"></span></td>
+            <td><span id="hpPerLevelValue" th:text="${championStats.hpperlevel}"></span></td>
         </tr>
         <tr>
             <td>MP:</td>
-            <td><span th:text="${championStats.mp}"></span></td>
+            <td><span id="mpValue" th:text="${championStats.mp}"></span></td>
             <td>MP per level:</td>
-            <td><span th:text="${championStats.mpperlevel}"></span></td>
+            <td><span id="mpPerLevelValue" th:text="${championStats.mpperlevel}"></span></td>
+        </tr>
+        <tr>
+            <td>Armor:</td>
+            <td><span th:text="${championStats.armor}"></span></td>
+            <td>Armor per level:</td>
+            <td><span th:text="${championStats.armorperlevel}"></span></td>
+        </tr>
+        <tr>
+            <td>Spell block:</td>
+            <td><span th:text="${championStats.spellblock}"></span></td>
+            <td>Spell block per level:</td>
+            <td><span th:text="${championStats.spellblockperlevel}"></span></td>
         </tr>
         <tr>
             <td>Movespeed:</td>
             <td><span th:text="${championStats.movespeed}"></span></td>
-            <td>Armor:</td>
-            <td><span th:text="${championStats.armor}"></span></td>
-        </tr>
-        <tr>
-            <td>Armor per level:</td>
-            <td><span th:text="${championStats.armorperlevel}"></span></td>
-            <td>Spell block:</td>
-            <td><span th:text="${championStats.spellblock}"></span></td>
-        </tr>
-        <tr>
-            <td>Spell block per level:</td>
-            <td><span th:text="${championStats.spellblockperlevel}"></span></td>
             <td>Attack range:</td>
             <td><span th:text="${championStats.attackrange}"></span></td>
         </tr>
@@ -101,7 +118,30 @@
             <td><span th:text="${championStats.attackspeedperlevel}"></span></td>
         </tr>
     </table>
+    <script th:inline="javascript">
+        var selectElement = document.getElementById("selectNumber");
+        var hpValueElement = document.getElementById("hpValue");
+        var mpValueElement = document.getElementById("mpValue");
+        // Add similar variables for other stats
 
+        selectElement.addEventListener("change", function() {
+            var selectedLevel = parseInt(selectElement.value);
+
+            // HP
+            var hpPerLevel = parseInt([[${championStats.hpperlevel}]]);
+            var initialHP = parseInt([[${championStats.hp}]]);
+            var calculatedHP = initialHP + hpPerLevel * (selectedLevel - 1);
+            hpValueElement.textContent = calculatedHP;
+
+            // MP
+            var mpPerLevel = parseInt([[${championStats.mpperlevel}]]);
+            var initialMP = parseInt([[${championStats.mp}]]);
+            var calculatedMP = initialMP + mpPerLevel * (selectedLevel - 1);
+            mpValueElement.textContent = calculatedMP;
+
+            // Add similar logic for other stats
+        });
+    </script>
 
     <img th:src="${'https://ddragon.leagueoflegends.com/cdn/' + version + '/img/passive/' + championPassive.image.full}">
     <label>Name: </label><p th:text="${championPassive.name}"></p>
