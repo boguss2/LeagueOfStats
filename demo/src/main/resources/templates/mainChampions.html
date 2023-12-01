@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <!--   WYGLAD i FILTROWANIE PO KLASIE-->
+<!--   WYGLAD i FILTROWANIE PO KLASIE-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Champions List</title>
@@ -13,97 +13,28 @@
 
 <input type="text" id="myInput" oninput="filterNames()" placeholder="Search for names..">
 
-<!-- Display search results in this container -->
-<div id="searchResultsContainer"></div>
-
-<button class="class-button" onclick="filterByTag('Assassin')">Assassin</button>
-<button class="class-button" onclick="filterByTag('Fighter')">Fighter</button>
-<button class="class-button" onclick="filterByTag('Mage')">Mage</button>
-<button class="class-button" onclick="filterByTag('Marksman')">Marksman</button>
-<button class="class-button" onclick="filterByTag('Support')">Support</button>
-<button class="class-button" onclick="filterByTag('Tank')">Tank</button>
-
+<select id="tagFilter">
+    <option value="all">All</option>
+    <option value="fighter">Fighter</option>
+    <option value="tank">Tank</option>
+    <option value="mage">Mage</option>
+</select>
 <div class="container">
     <div class="row">
         <div class="col-lg-3 col-md-4 col-sm-6" th:each="entry: ${championsData}" data-classes="${entry.value.tags}">
-            <div class="champion" data-tags="${entry.value.tags}">
-                <img id="skin" th:src="${'https://ddragon.leagueoflegends.com/cdn/13.23.1/img/champion/' + entry.value.id + '.png'}">
-                <a class="champion-name" th:text="${entry.value.id}" th:href="@{'/champions/' + ${entry.value.id}}"></a>
-<!--                <span class="champion-classes">-->
-<!--                    <span th:each="tag, tagStatus : ${entry.value.tags}">-->
-<!--                        <span th:text="${tag}"></span><span th:if="${!tagStatus.last}">, </span>-->
-<!--                    </span>-->
-<!--                </span>-->
+            <div class="champion">
+                <img src="../static/backgrounds/Yuumi_0.jpg" alt="img1" width="120" height="120">
+                <span class="champion-name" th:text="${entry.value.id}" th:href="@{'/champions/' + ${entry.value.id}}"></span>:
+                <span class="champion-classes">
+                <span th:each="tag, tagStatus : ${entry.value.tags}">
+                <span th:text="${tag}"></span><span th:if="${!tagStatus.last}">, </span>
+                </span>
+                </span>
             </div>
         </div>
     </div>
 </div>
 
-<script>
-    function filterNames() {
-        var filter = document.getElementById("myInput").value.toLowerCase();
-        var champions = document.getElementsByClassName("champion");
-
-        // Clear previous search results
-        document.getElementById("searchResultsContainer").innerHTML = "";
-
-        if (filter.trim() === "") {
-            // Hide the search results container when the filter is empty
-            document.getElementById("searchResultsContainer").style.display = "none";
-            return;
-        }
-
-        var displayedResults = 0;
-
-        for (var i = 0; i < champions.length; i++) {
-            var champion = champions[i];
-            var championNameElement = champion.querySelector(".champion-name");
-            var championName = championNameElement.textContent.toLowerCase();
-
-            if (championName.includes(filter)) {
-                // Display search result
-                var resultItem = document.createElement("div");
-                var link = document.createElement("a");
-                link.textContent = capitalize(championName);
-                link.href = '/champions/' + capitalize(championName);
-                link.onclick = function(event) {
-                    event.stopPropagation(); // Prevent the filterNames() from being triggered
-                };
-                resultItem.appendChild(link);
-                document.getElementById("searchResultsContainer").appendChild(resultItem);
-
-                displayedResults++;
-
-                // Limit to top 4 champions
-                if (displayedResults === 4) {
-                    break;
-                }
-            }
-        }
-
-        // Show the search results container
-        document.getElementById("searchResultsContainer").style.display = "block";
-    }
-
-    function capitalize(str) {
-        return str.charAt(0).toUpperCase() + str.slice(1);
-    }
-
-    function filterByTag(tag) {
-        var champions = document.getElementsByClassName("champion");
-
-        for (var i = 0; i < champions.length; i++) {
-            var champion = champions[i];
-            var championTags = champion.getAttribute("data-tags").toLowerCase();
-            if (championTags.includes(tag.toLowerCase())) {
-                champion.style.display = "block";
-            } else {
-                champion.style.display = "none";
-            }
-        }
-    }
-</script>
-
-
+<script th:src="@{/js/mainChampions.js}" defer></script>
 </body>
 </html>
