@@ -23,6 +23,7 @@
 <ul id="myUL">
     <li th:each="entry: ${championsData}" class="champion-item" data-classes="${entry.value.tags}">
         <div class="champion">
+
             <span class="champion-name" th:text="${entry.value.id}" th:href="@{'/champions/' + ${entry.value.id}}"></span>:
             <span class="champion-classes">
                 <span th:each="tag, tagStatus : ${entry.value.tags}">
