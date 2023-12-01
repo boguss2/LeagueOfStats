@@ -9,17 +9,37 @@
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 <!--usunąć <text> z description, zdjecia itemow-->
 <div class="container">
+    <img id="img" th:src="${'https://static.bigbrain.gg/assets/lol/riot_static/13.23.1/img/item/' + itemImage.full}">
     <h1 th:text="${itemData.name}"></h1>
     <p th:text="${itemData.plaintext}"></p>
     <p th:text="${itemGold.total}"></p>
-    <p th:text="${itemData.description}"></p>
 
+    <span id="formattedOutput" th:attr="data=${itemData.description}"></span>
+
+    <script>
+        function formatOutput(inputText) {
+            const attentionPattern = /<attention>(.*?)<\/attention>/g;
+            const activePattern = /<active>(.*?)<\/active>/g;
+            const passivePattern = /<passive>(.*?)<\/passive>/g;
+            const rarityMythicPattern = /<rarityMythic>(.*?)<\/rarityMythic>/g;
+            const rarityLegendaryPattern = /<rarityLegendary>(.*?)<\/rarityLegendary>/g;
+
+            inputText = inputText.replace(attentionPattern, '<b>$1</b>');
+            inputText = inputText.replace(activePattern, '<i>$1</i>');
+            // Additional formatting for other elements if needed
+
+            return inputText;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const formattedOutputElement = document.getElementById('formattedOutput');
+            const itemDataDescription = formattedOutputElement.getAttribute('data');
+            const formattedDescription = formatOutput(itemDataDescription);
+            formattedOutputElement.innerHTML = formattedDescription;
+        });
+    </script>
 
     <p th:text="${itemData.tags}"></p>
-    <p th:each="entry : ${itemData.stats.entrySet()}">
-    <span th:text="${entry.key}"></span>: <span th:text="${entry.value}"></span><br></p>
-    <p th:if="${itemData.effects != null}" th:text="${itemData.effects.Effect1Amount}"></p>
-
 
 
 </div>

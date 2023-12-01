@@ -6,21 +6,51 @@
     <title>Strona Domowa</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/Champions.css}">
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <!-- Your head content -->
+
+    <!-- Add the following script -->
+    <script>
+        // Function to handle list item click
+        function navigateToItem(url) {
+            window.location.href = url;
+        }
+
+        // Function to attach click event to list items
+        function attachClickEvent() {
+            var listItems = document.querySelectorAll("#myUL li");
+
+            listItems.forEach(function (item) {
+                item.addEventListener("click", function () {
+                    var url = item.getAttribute("data-url");
+                    if (url) {
+                        navigateToItem(url);
+                    }
+                });
+            });
+        }
+
+        // Wait for the DOM to be ready
+        document.addEventListener("DOMContentLoaded", function () {
+            attachClickEvent();
+        });
+    </script>
+
+    <input type="text" id="myInput" onkeyup="filterNames()" placeholder="Search for names..">
 </head>
 <body>
-<div th:replace="~{fragments/navbar :: navbar}"></div>
+<!-- Your body content -->
 
-<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
-
+<!-- Update Thymeleaf expression to use entry.value.name in data-url -->
 <ul id="myUL">
-    <li th:each="entry: ${itemsData}" th:attr="data-url=@{'/items/' + ${entry.key}}">
+    <li th:each="entry: ${itemsData}" th:attr="data-url=@{'/items/' + ${entry.value.name}}">
         <span class="item-name" th:text="${entry.value.name}"></span>:
-        <span th:text="${entry.value.plaintext}"></span>
+        <span th:text="${entry.value.tags}"></span>
     </li>
 </ul>
 
+<!-- Add the following script -->
 <script th:src="@{/js/mainChampions.js}" defer></script>
 <script th:src="@{/webjars/bootstrap/5.3.0/js/bootstrap.min.js}"></script>
-
 </body>
 </html>
