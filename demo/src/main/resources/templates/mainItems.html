@@ -42,12 +42,17 @@
 <!-- Your body content -->
 
 <!-- Update Thymeleaf expression to use entry.value.name in data-url -->
-<ul id="myUL">
-    <li th:each="entry: ${itemsData}" th:attr="data-url=@{'/items/' + ${entry.value.name}}">
-        <span class="item-name" th:text="${entry.value.name}"></span>:
-        <span th:text="${entry.value.tags}"></span>
-    </li>
-</ul>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3 col-md-4 col-sm-6" th:each="entry: ${itemsData}" th:attr="data-url=@{'/items/' + ${entry.value.name}}">
+            <div class="champion" data-tags="${entry.value.tags}">
+                <img id="skin" th:src="${}">
+                <span class="item-name" th:text="${entry.value.name}"></span>:
+                <span th:text="${entry.value.tags}"></span>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Add the following script -->
 <script th:src="@{/js/mainChampions.js}" defer></script>

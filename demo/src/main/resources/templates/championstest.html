@@ -37,3 +37,13 @@
 <script th:src="@{/js/mainChampions.js}" defer></script>
 </body>
 </html>
+
+
+
+
+<ul id="myUL">
+    <li th:each="entry: ${itemsData}" th:attr="data-url=@{'/items/' + ${entry.value.name}}">
+        <span class="item-name" th:text="${entry.value.name}"></span>:
+        <span th:text="${entry.value.tags}"></span>
+    </li>
+</ul>
