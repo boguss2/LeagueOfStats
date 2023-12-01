@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<!--   WYGLAD i FILTROWANIE PO KLASIE-->
+    <!--   WYGLAD i FILTROWANIE PO KLASIE-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Champions List</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/css/championsMain.css}">
+    <link rel="stylesheet" th:href="@{/css/Champions.css}">
     <div th:replace="~{fragments/navbar :: navbar}"></div>
 </head>
 <body>
@@ -19,21 +19,20 @@
     <option value="tank">Tank</option>
     <option value="mage">Mage</option>
 </select>
-<div class="container">
-    <div class="row">
-        <div class="col-lg-3 col-md-4 col-sm-6" th:each="entry: ${championsData}" data-classes="${entry.value.tags}">
-            <div class="champion">
-                <img src="../static/backgrounds/Yuumi_0.jpg" alt="img1" width="120" height="120">
-                <span class="champion-name" th:text="${entry.value.id}" th:href="@{'/champions/' + ${entry.value.id}}"></span>:
-                <span class="champion-classes">
+
+<ul id="myUL">
+    <li th:each="entry: ${championsData}" class="champion-item" data-classes="${entry.value.tags}">
+        <div class="champion">
+            <img src="../static/backgrounds/Yuumi_0.jpg" alt="Description of the image" width="120" height="120">
+            <span class="champion-name" th:text="${entry.value.id}" th:href="@{'/champions/' + ${entry.value.id}}"></span>:
+            <span class="champion-classes">
                 <span th:each="tag, tagStatus : ${entry.value.tags}">
-                <span th:text="${tag}"></span><span th:if="${!tagStatus.last}">, </span>
+                    <span th:text="${tag}"></span><span th:if="${!tagStatus.last}">, </span>
                 </span>
-                </span>
-            </div>
+            </span>
         </div>
-    </div>
-</div>
+    </li>
+</ul>
 
 <script th:src="@{/js/mainChampions.js}" defer></script>
 </body>

@@ -10,7 +10,7 @@
 <header>
     <div th:replace="~{fragments/navbar :: navbar}"></div>
 </header>
-<body class="vh-100 overflow-hidden">
+<body>
 <div class="container">
     <img th:src="${'https://ddragon.leagueoflegends.com/cdn/' + version +'/img/champion/' + championImage.full}">
     <h1 th:text="${championData.name}"></h1>
