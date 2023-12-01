@@ -23,7 +23,7 @@
     <div class="row">
         <div class="col-lg-2 col-md-4 col-sm-6" th:each="entry: ${championsData}" data-classes="${entry.value.tags}">
             <div class="champion">
-                <a class="champion-link" href="#"><div class="image-wrapper"><img src="https://static.bigbrain.gg/assets/lol/riot_static/13.23.1/img/champion/Aatrox.png" alt="Aatrox" width="120px" height="120px"></div><div class="champion-name"></div></a>
+                <div class="image-wrapper"><img src="https://static.bigbrain.gg/assets/lol/riot_static/13.23.1/img/champion/Aatrox.png" alt="Aatrox" width="120px" height="120px"></div>
                 <span class="champion-name" th:text="${entry.value.id}" th:href="@{'/champions/' + ${entry.value.id}}"></span>:
                 <span class="champion-classes">
                 <span th:each="tag, tagStatus : ${entry.value.tags}">
@@ -36,5 +36,6 @@
 </div>
 
 <script th:src="@{/js/mainChampions.js}" defer></script>
+<script th:src="@{/webjars/bootstrap/5.3.0/js/bootstrap.min.js}"></script>
 </body>
 </html>
