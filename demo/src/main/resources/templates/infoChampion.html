@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <!--  Wyglad strony, Galeria skinow, ikonki statow? (z bootsrapa mozna) -->
     <meta charset="UTF-8">
     <title th:text="${championData.name}">Title</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}">
@@ -17,28 +16,56 @@
     <p th:text="${championData.title}"></p>
     <p th:text="${championData.lore}"></p>
 
-    <p>Compare base stats</p>
-    <input type="text" id="myInput" class="search-bar" placeholder="Search for champions..." oninput="filterNames()">
+    <div class="search-container">
+        <label for="searchChampion">Search Champion:</label>
+        <input type="text" id="searchChampion" oninput="filterChampions()" placeholder="Type to search...">
+    </div>
 
-    <ul id="searchUL">
-        <li th:each="entry: ${championsData}" class="champion-item" data-classes="${entry.value.tags}">
-            <div class="champion">
-                <span class="champion-name" th:text="${entry.value.id}" th:href="@{'/champions/' + ${entry.value.id}}"></span>:
-                <span class="champion-classes"></span>
-            </div>
-        </li>
-    </ul>
+    <ul id="championList" class="champion-list"></ul>
+    <script th:inline="javascript">
+        function filterChampions() {
+            var input, filter, ul, li, a, i, txtValue;
+            input = document.getElementById('searchChampion');
+            filter = input.value.toUpperCase();
+            ul = document.getElementById('championList');
+            li = ul.getElementsByTagName('li');
 
-    <p>
-        <span th:text="${championInfo.attack}"></span>
-        <span th:text="${championInfo.magic}"></span>
-        <span th:text="${championInfo.defense}"></span>
-        <span th:text="${championInfo.difficulty}"></span>
-    </p>
+            ul.innerHTML = '';
+
+            if (filter.trim() === '') {
+                return;
+            }
+
+            var resultCount = 0;
+
+            [[${championsData}]].forEach(function (champion) {
+                txtValue = champion.name.toUpperCase();
+                if (txtValue.includes(filter) && resultCount < 4) {
+                    var li = document.createElement('li');
+                    li.textContent = champion.name;
+                    li.onclick = function () {
+                        selectChampion(champion.id);  // Pass champion ID
+                    };
+                    ul.appendChild(li);
+                    resultCount++;
+                }
+            });
+        }
+
+        function selectChampion(clickedChampionId) {
+            var currentChampion = window.location.pathname.split('/')[2];
+            var targetUrl = '/champions/' + currentChampion + '/vs/' + clickedChampionId;  // Use ID instead of name
+            window.location.href = targetUrl;
+        }
+
+        document.getElementById('searchChampion').addEventListener('input', function () {
+            filterChampions();
+        });
+    </script>
 
     <p th:text="${championData.tags}"></p>
     <p th:text="${championData.partype}"></p>
-<!-- https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/perk-images/statmods/ ikonki :D -->
+
     <label for="selectNumber">Select a level:</label>
     <select id="selectNumber" name="selectNumber">
         <option value="1" selected>Level 1</option>
@@ -191,7 +218,6 @@
     </div>
 </div>
 
-<script th:src="@{/js/infoChampion.js}" defer></script>
 <script th:src="@{/webjars/bootstrap/5.3.0/js/bootstrap.min.js}"></script>
 </body>
 </html>
