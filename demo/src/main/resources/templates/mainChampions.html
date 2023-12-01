@@ -28,12 +28,12 @@
         <div class="col-lg-3 col-md-4 col-sm-6" th:each="entry: ${championsData}" data-classes="${entry.value.tags}">
             <div class="champion" data-tags="${entry.value.tags}">
                 <img id="skin" th:src="${'https://ddragon.leagueoflegends.com/cdn/13.23.1/img/champion/' + entry.value.id + '.png'}">
-                <a class="champion-name" th:text="${entry.value.id}" th:href="@{'/champions/' + ${entry.value.id}}"></a>:
-                <span class="champion-classes">
-                    <span th:each="tag, tagStatus : ${entry.value.tags}">
-                        <span th:text="${tag}"></span><span th:if="${!tagStatus.last}">, </span>
-                    </span>
-                </span>
+                <a class="champion-name" th:text="${entry.value.id}" th:href="@{'/champions/' + ${entry.value.id}}"></a>
+<!--                <span class="champion-classes">-->
+<!--                    <span th:each="tag, tagStatus : ${entry.value.tags}">-->
+<!--                        <span th:text="${tag}"></span><span th:if="${!tagStatus.last}">, </span>-->
+<!--                    </span>-->
+<!--                </span>-->
             </div>
         </div>
     </div>
