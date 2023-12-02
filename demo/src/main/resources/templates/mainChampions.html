@@ -16,12 +16,12 @@
 <!-- Display search results in this container -->
 <div id="searchResultsContainer"></div>
 
-<button class="class-button" onclick="filterByTag('Assassin')">Assassin</button>
-<button class="class-button" onclick="filterByTag('Fighter')">Fighter</button>
-<button class="class-button" onclick="filterByTag('Mage')">Mage</button>
-<button class="class-button" onclick="filterByTag('Marksman')">Marksman</button>
-<button class="class-button" onclick="filterByTag('Support')">Support</button>
-<button class="class-button" onclick="filterByTag('Tank')">Tank</button>
+<!--<button class="class-button" onclick="filterByTag('Assassin')">Assassin</button>-->
+<!--<button class="class-button" onclick="filterByTag('Fighter')">Fighter</button>-->
+<!--<button class="class-button" onclick="filterByTag('Mage')">Mage</button>-->
+<!--<button class="class-button" onclick="filterByTag('Marksman')">Marksman</button>-->
+<!--<button class="class-button" onclick="filterByTag('Support')">Support</button>-->
+<!--<button class="class-button" onclick="filterByTag('Tank')">Tank</button>-->
 
 <div class="container">
     <div class="row">
@@ -53,21 +53,30 @@
             return;
         }
 
+        var displayedResults = 0;
+
         for (var i = 0; i < champions.length; i++) {
             var champion = champions[i];
             var championNameElement = champion.querySelector(".champion-name");
             var championName = championNameElement.textContent.toLowerCase();
+            var championNameOriginal = championNameElement.textContent;
             if (championName.includes(filter)) {
                 // Display search result
                 var resultItem = document.createElement("div");
                 var link = document.createElement("a");
-                link.textContent = capitalize(championName);
-                link.href = '/champions/' + capitalize(championName);
+                link.textContent = championNameElement.textContent; // Keep the original case
+                link.href = '/champions/' + championNameOriginal;
                 link.onclick = function(event) {
                     event.stopPropagation(); // Prevent the filterNames() from being triggered
                 };
                 resultItem.appendChild(link);
                 document.getElementById("searchResultsContainer").appendChild(resultItem);
+
+                displayedResults++;
+
+                if (displayedResults === 4) {
+                    break; // Limit to 4 results
+                }
             }
         }
 
@@ -93,6 +102,8 @@
         }
     }
 </script>
+
+
 
 
 </body>
