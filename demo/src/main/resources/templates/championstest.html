@@ -1,49 +1,83 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <!--   WYGLAD i FILTROWANIE PO KLASIE-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Champions List</title>
+    <title>Strona Domowa</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/Champions.css}">
     <div th:replace="~{fragments/navbar :: navbar}"></div>
 </head>
-<body>
 
 <input type="text" id="myInput" oninput="filterNames()" placeholder="Search for names..">
 
-<select id="tagFilter">
-    <option value="all">All</option>
-    <option value="fighter">Fighter</option>
-    <option value="tank">Tank</option>
-    <option value="mage">Mage</option>
-</select>
 
-<ul id="myUL">
-    <li th:each="entry: ${championsData}" class="champion-item" data-classes="${entry.value.tags}">
-        <div class="champion">
-            <img src="../static/backgrounds/Yuumi_0.jpg" alt="Description of the image" width="120" height="120">
-            <span class="champion-name" th:text="${entry.value.id}" th:href="@{'/champions/' + ${entry.value.id}}"></span>:
-            <span class="champion-classes">
-                <span th:each="tag, tagStatus : ${entry.value.tags}">
-                    <span th:text="${tag}"></span><span th:if="${!tagStatus.last}">, </span>
-                </span>
-            </span>
+<div id="searchResultsContainer"></div>
+
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3 col-md-4 col-sm-6" th:each="entry: ${itemsData}" data-classes="${entry.value.tags}">
+            <div class="item" data-tags="${entry.value.tags}">
+                <img id="icon" th:src="${'https://static.bigbrain.gg/assets/lol/riot_static/13.23.1/img/item/' + entry.key + '.png'}">
+                <a class="item-name" th:text="${entry.value.name}" th:href="@{'/items/' + ${entry.value.name}}"></a>
+
+            </div>
         </div>
-    </li>
-</ul>
+    </div>
+</div>
 
-<script th:src="@{/js/mainChampions.js}" defer></script>
+<script>
+    function filterNames() {
+        var filter = document.getElementById("myInput").value.toLowerCase();
+        var items = document.getElementsByClassName("item");
+
+        // Clear previous search results
+        document.getElementById("searchResultsContainer").innerHTML = "";
+
+        if (filter.trim() === "") {
+            // Hide the search results container when the filter is empty
+            document.getElementById("searchResultsContainer").style.display = "none";
+            return;
+        }
+
+        var displayedResults = 0;
+
+        for (var i = 0; i < items.length; i++) {
+            var item = items[i];
+            var itemNameElement = item.querySelector(".item-name");
+            var itemName = itemNameElement.textContent.toLowerCase();
+            var itemNameOriginal = itemNameElement.textContent;
+            if (itemName.includes(filter)) {
+                // Display search result
+                var resultItem = document.createElement("div");
+                var link = document.createElement("a");
+                link.textContent = itemNameElement.textContent; // Keep the original case
+                link.href = '/items/' + itemNameOriginal;
+                link.onclick = function(event) {
+                    event.stopPropagation(); // Prevent the filterNames() from being triggered
+                };
+                resultItem.appendChild(link);
+                document.getElementById("searchResultsContainer").appendChild(resultItem);
+
+                displayedResults++;
+
+                if (displayedResults === 4) {
+                    break; // Limit to 4 results
+                }
+            }
+        }
+
+        // Show the search results container
+        document.getElementById("searchResultsContainer").style.display = "block";
+    }
+
+    function capitalize(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+</script>
+
+<script th:src="@{/webjars/bootstrap/5.3.0/js/bootstrap.min.js}"></script>
 </body>
 </html>
-
-
-
-
-<ul id="myUL">
-    <li th:each="entry: ${itemsData}" th:attr="data-url=@{'/items/' + ${entry.value.name}}">
-        <span class="item-name" th:text="${entry.value.name}"></span>:
-        <span th:text="${entry.value.tags}"></span>
-    </li>
-</ul>

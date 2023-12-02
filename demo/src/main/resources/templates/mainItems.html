@@ -3,41 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strona Domowa</title>
+    <title>Items List</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/css/Champions.css}">
+    <link rel="stylesheet" th:href="@{/css/championsMain.css}">
     <div th:replace="~{fragments/navbar :: navbar}"></div>
 </head>
-
-<input type="text" id="myInput" oninput="filterNames()" placeholder="Search for names..">
-
-<!-- Display search results in this container -->
-<div id="searchResultsContainer"></div>
-
 <body>
+<input type="text" id="myInput" oninput="filterNames()" placeholder="Search for items..">
+<button class="class-button" onclick="toggleFilter('All')">Clear</button>
+<button class="class-button" onclick="toggleFilter('Damage')">Attack Damage</button>
+<button class="class-button" onclick="toggleFilter('CriticalStrike')">Critical Strike</button>
+<button class="class-button" onclick="toggleFilter('AttackSpeed')">Attack Speed</button>
+<button class="class-button" onclick="toggleFilter('OnHit')">On-Hit Effects</button>
+<button class="class-button" onclick="toggleFilter('ArmorPenetration')">Armor Penetration</button>
+<button class="class-button" onclick="toggleFilter('SpellDamage')">Ability Power</button>
+<button class="class-button" onclick="toggleFilter('Mana')">Mana</button>
+<button class="class-button" onclick="toggleFilter('ManaRegen')">Mana Regeneration</button>
+<button class="class-button" onclick="toggleFilter('MagicPenetration')">Magic Penetration</button>
+<button class="class-button" onclick="toggleFilter('Health')">Health</button>
+<button class="class-button" onclick="toggleFilter('HealthRegen')">Health Regeneration</button>
+<button class="class-button" onclick="toggleFilter('Armor')">Armor</button>
+<button class="class-button" onclick="toggleFilter('MagicResist')">Magic Resistance</button>
+<button class="class-button" onclick="toggleFilter('AbilityHaste')">Ability Haste</button>
+<button class="class-button" onclick="toggleFilter('LifeSteal')">Life Steal</button>
+<button class="class-button" onclick="toggleFilter('SpellVamp')">Spell Vamp</button>
+<button class="class-button" onclick="toggleFilter('NonbootsMovement')">Movement</button>
+<button class="class-button" onclick="toggleFilter('Boots')">Boots</button>
+
+<div id="searchResultsContainer"></div>
 
 <div class="container">
     <div class="row">
         <div class="col-lg-3 col-md-4 col-sm-6" th:each="entry: ${itemsData}" data-classes="${entry.value.tags}">
             <div class="item" data-tags="${entry.value.tags}">
-                <img id="icon" th:src="${'https://static.bigbrain.gg/assets/lol/riot_static/13.23.1/img/item/' + entry.key + '.png'}">
+                <img id="itemImage" th:src="${'https://ddragon.leagueoflegends.com/cdn/13.23.1/img/item/' + entry.value.image.full}">
                 <a class="item-name" th:text="${entry.value.name}" th:href="@{'/items/' + ${entry.value.name}}"></a>
-
             </div>
         </div>
     </div>
 </div>
 
-<script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var itemsData = /*[[${itemsData}]]*/ {};
+    var itemsArray = Object.values(itemsData);
+    var selectedTags = [];
+
+    console.log("itemsData:", itemsData);
+
+    function filterByTags(tags) {
+        return itemsArray.filter(item =>
+            item.tags !== undefined && tags.every(tag => item.tags.includes(tag))
+        );
+    }
+
+    function displayItems(items) {
+        var itemsList = document.querySelector(".row");
+
+        itemsList.innerHTML = "";
+
+        items.forEach(item => {
+            var colDiv = document.createElement("div");
+            colDiv.classList.add("col-lg-3", "col-md-4", "col-sm-6");
+
+            var itemDiv = document.createElement("div");
+            itemDiv.classList.add("item");
+
+            var img = document.createElement("img");
+            img.id = "itemImage";
+            img.src = 'https://ddragon.leagueoflegends.com/cdn/13.23.1/img/item/' + item.image.full;
+
+            var itemName = document.createElement("a");
+            itemName.classList.add("item-name");
+            itemName.href = '/items/' + item.name;
+            itemName.textContent = item.name;
+
+            itemDiv.appendChild(img);
+            itemDiv.appendChild(itemName);
+
+            colDiv.appendChild(itemDiv);
+            itemsList.appendChild(colDiv);
+        });
+    }
+
+    function toggleFilter(tag) {
+        if (tag === 'All') {
+            selectedTags = [];
+        } else {
+            var index = selectedTags.indexOf(tag);
+            if (index !== -1) {
+                selectedTags.splice(index, 1);
+            } else {
+                selectedTags.push(tag);
+            }
+        }
+
+        var filteredItems = filterByTags(selectedTags);
+        displayItems(filteredItems);
+
+        var buttons = document.querySelectorAll('.class-button');
+        buttons.forEach(button => {
+            button.classList.remove('selected');
+            if (selectedTags.includes(button.textContent)) {
+                button.classList.add('selected');
+            }
+        });
+    }
+
+    displayItems(itemsArray);
+
     function filterNames() {
         var filter = document.getElementById("myInput").value.toLowerCase();
         var items = document.getElementsByClassName("item");
 
-        // Clear previous search results
         document.getElementById("searchResultsContainer").innerHTML = "";
 
         if (filter.trim() === "") {
-            // Hide the search results container when the filter is empty
             document.getElementById("searchResultsContainer").style.display = "none";
             return;
         }
@@ -50,13 +131,12 @@
             var itemName = itemNameElement.textContent.toLowerCase();
             var itemNameOriginal = itemNameElement.textContent;
             if (itemName.includes(filter)) {
-                // Display search result
                 var resultItem = document.createElement("div");
                 var link = document.createElement("a");
-                link.textContent = itemNameElement.textContent; // Keep the original case
+                link.textContent = itemNameElement.textContent;
                 link.href = '/items/' + itemNameOriginal;
                 link.onclick = function(event) {
-                    event.stopPropagation(); // Prevent the filterNames() from being triggered
+                    event.stopPropagation();
                 };
                 resultItem.appendChild(link);
                 document.getElementById("searchResultsContainer").appendChild(resultItem);
@@ -64,20 +144,33 @@
                 displayedResults++;
 
                 if (displayedResults === 4) {
-                    break; // Limit to 4 results
+                    break;
                 }
             }
         }
 
-        // Show the search results container
         document.getElementById("searchResultsContainer").style.display = "block";
     }
 
     function capitalize(str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
-</script>
 
-<script th:src="@{/webjars/bootstrap/5.3.0/js/bootstrap.min.js}"></script>
+    var allChampionsTags = getAllTags(championsArray);
+    var allItemsTags = getAllTags(itemsArray);
+    var allTags = [...new Set([...allChampionsTags, ...allItemsTags])];
+
+    console.log("All Tags:", allTags);
+
+    function getAllTags(dataArray) {
+        return dataArray.reduce((tags, item) => {
+            if (item.tags !== undefined) {
+                return [...tags, ...item.tags];
+            }
+            return tags;
+        }, []);
+    }
+    /*]]>*/
+</script>
 </body>
 </html>

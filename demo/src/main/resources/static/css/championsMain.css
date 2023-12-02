@@ -8,3 +8,12 @@ body {
         backdrop-filter: blur(9px);
     }
 }
+
+.class-button {
+    margin-right: 10px;
+}
+
+.class-button.selected {
+    background-color: #4CAF50;
+    color: white;
+}
