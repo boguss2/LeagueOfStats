@@ -1,83 +1,95 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strona Domowa</title>
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/css/Champions.css}">
-    <div th:replace="~{fragments/navbar :: navbar}"></div>
-</head>
-
-<input type="text" id="myInput" oninput="filterNames()" placeholder="Search for names..">
-
-
-<div id="searchResultsContainer"></div>
-
-<body>
-
-<div class="container">
-    <div class="row">
-        <div class="col-lg-3 col-md-4 col-sm-6" th:each="entry: ${itemsData}" data-classes="${entry.value.tags}">
-            <div class="item" data-tags="${entry.value.tags}">
-                <img id="icon" th:src="${'https://static.bigbrain.gg/assets/lol/riot_static/13.23.1/img/item/' + entry.key + '.png'}">
-                <a class="item-name" th:text="${entry.value.name}" th:href="@{'/items/' + ${entry.value.name}}"></a>
-
-            </div>
-        </div>
-    </div>
+<!-- Display champion1 stats and differences -->
+<div class="row" id="championStatsContainer">
+    <!-- Stats will be dynamically added here -->
 </div>
 
-<script>
-    function filterNames() {
-        var filter = document.getElementById("myInput").value.toLowerCase();
-        var items = document.getElementsByClassName("item");
+<script th:inline="javascript">
+    // Function to format a float value
+    function formatFloat(value, decimalPlaces) {
+        return parseFloat(value.toFixed(decimalPlaces)).toString().replace(/(\.0+|(?<=\.\d)0+)$/, '');
+    }
 
-        // Clear previous search results
-        document.getElementById("searchResultsContainer").innerHTML = "";
+    // Function to update champion1 stat based on the selected level
+    function updateStat(selectedLevel, statName) {
+        var statElementChampion1 = document.getElementById(statName + "champion1");
+        var perLevelElementChampion1 = document.getElementById(statName + "perlevelchampion1");
 
-        if (filter.trim() === "") {
-            // Hide the search results container when the filter is empty
-            document.getElementById("searchResultsContainer").style.display = "none";
-            return;
-        }
+        // Retrieve the base value for champion1 stat
+        var baseValueChampion1 = parseFloat(statElementChampion1.getAttribute("data-base")) || 0;
+        var perLevelValueChampion1 = parseFloat(perLevelElementChampion1.getAttribute("data-per-level")) || 0;
 
-        var displayedResults = 0;
+        // Retrieve the base value for champion2 stat
+        var baseValueChampion2 = parseFloat(document.getElementById(statName + "champion2").getAttribute("data-base")) || 0;
+        var perLevelValueChampion2 = parseFloat(document.getElementById(statName + "perlevelchampion2").getAttribute("data-per-level")) || 0;
 
-        for (var i = 0; i < items.length; i++) {
-            var item = items[i];
-            var itemNameElement = item.querySelector(".item-name");
-            var itemName = itemNameElement.textContent.toLowerCase();
-            var itemNameOriginal = itemNameElement.textContent;
-            if (itemName.includes(filter)) {
-                // Display search result
-                var resultItem = document.createElement("div");
-                var link = document.createElement("a");
-                link.textContent = itemNameElement.textContent; // Keep the original case
-                link.href = '/items/' + itemNameOriginal;
-                link.onclick = function(event) {
-                    event.stopPropagation(); // Prevent the filterNames() from being triggered
-                };
-                resultItem.appendChild(link);
-                document.getElementById("searchResultsContainer").appendChild(resultItem);
+        // Calculate the updated value based on the selected level for champion1
+        var calculatedValueChampion1 = baseValueChampion1 + perLevelValueChampion1 * (selectedLevel - 1);
 
-                displayedResults++;
+        // Calculate the difference between champion1 and champion2
+        var difference = calculatedValueChampion1 - baseValueChampion2;
 
-                if (displayedResults === 4) {
-                    break; // Limit to 4 results
-                }
+        // Format the values to a fixed number of decimal places and remove trailing zeros
+        var formattedValueChampion1 = formatFloat(calculatedValueChampion1, 2);
+        var formattedDifference = formatFloat(difference, 2);
+
+        // Update the displayed value for champion1
+        statElementChampion1.textContent = formattedValueChampion1 + " " + (difference >= 0 ? "-" : "+") + " " + formattedDifference;
+    }
+
+    // Function to display champion1 stats and differences
+    function displayChampionStats(champion1Stats, champion2Stats) {
+        var championStatsContainer = document.getElementById("championStatsContainer");
+        championStatsContainer.innerHTML = ""; // Clear existing stats
+
+        var table = document.createElement("table");
+        table.classList.add("table");
+
+        for (var key in champion1Stats) {
+            // Check if the per level value is defined
+            if (champion1Stats[key + "perlevel"] !== undefined) {
+                var row = table.insertRow();
+
+                // Display stat name in the first cell
+                var cell1 = row.insertCell(0);
+                cell1.innerHTML = key + ":";
+
+                // Display champion1 stat value in the second cell
+                var cell2 = row.insertCell(1);
+                cell2.id = key + "champion1"; // Set id for the champion1 stat element
+                cell2.setAttribute("data-base", champion1Stats[key]); // Set base value for the stat
+                cell2.innerHTML = formatFloat(champion1Stats[key], 2) + " " + (champion1Stats[key] - champion2Stats[key] >= 0 ? "-" : "+") + " " + formatFloat(Math.abs(champion1Stats[key] - champion2Stats[key]), 2);
+
+                // Display per level champion1 stat in the third cell
+                var cell3 = row.insertCell(2);
+                cell3.innerHTML = key + " per level:";
+
+                // Display per level champion1 value in the fourth cell
+                var cell4 = row.insertCell(3);
+                cell4.id = key + "perlevelchampion1"; // Set id for the per level champion1 stat element
+                cell4.setAttribute("data-per-level", champion1Stats[key + "perlevel"]); // Set per-level value
+                cell4.innerHTML = formatFloat(champion1Stats[key + "perlevel"], 2) + " " + (champion1Stats[key + "perlevel"] - champion2Stats[key + "perlevel"] >= 0 ? "-" : "+") + " " + formatFloat(Math.abs(champion1Stats[key + "perlevel"] - champion2Stats[key + "perlevel"]), 2);
             }
         }
 
-        // Show the search results container
-        document.getElementById("searchResultsContainer").style.display = "block";
+        championStatsContainer.appendChild(table);
     }
 
-    function capitalize(str) {
-        return str.charAt(0).toUpperCase() + str.slice(1);
-    }
+    // Example usage:
+    // Retrieve champion2 stats from Thymeleaf model
+    var champion1Stats = /*[[${champion1Stats}]]*/ {};
+    var champion2Stats = /*[[${champion2Stats}]]*/ {};
+
+    displayChampionStats(champion1Stats, champion2Stats);
+
+    // Add event listener to update stats on select change
+    document.getElementById("selectNumber").addEventListener("change", function () {
+        var selectedLevel = parseInt(this.value);
+
+        // Iterate over each stat element and update the value based on the selected level
+        for (var key in champion1Stats) {
+            if (champion1Stats[key + "perlevel"] !== undefined) {
+                updateStat(selectedLevel, key);
+            }
+        }
+    });
 </script>
-
-<script th:src="@{/webjars/bootstrap/5.3.0/js/bootstrap.min.js}"></script>
-</body>
-</html>
