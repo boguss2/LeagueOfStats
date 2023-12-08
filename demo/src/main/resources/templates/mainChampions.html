@@ -17,14 +17,13 @@
 <button class="class-button" onclick="toggleFilter('Marksman')">Marksman</button>
 <button class="class-button" onclick="toggleFilter('Support')">Support</button>
 <button class="class-button" onclick="toggleFilter('Tank')">Tank</button>
-
 <div id="searchResultsContainer"></div>
 
 <div class="container">
     <div class="row">
         <div class="col-lg-3 col-md-4 col-sm-6" th:each="entry: ${championsData}" data-classes="${entry.value.tags}">
             <div class="champion" data-tags="${entry.value.tags}">
-                <img id="skin" th:src="${'https://ddragon.leagueoflegends.com/cdn/13.23.1/img/champion/' + entry.value.id + '.png'}">
+                <img id="skin" th:src="${'https://ddragon.leagueoflegends.com/cdn/'+ version +'/img/champion/' + entry.value.id + '.png'}">
                 <a class="champion-name" th:text="${entry.value.id}" th:href="@{'/champions/' + ${entry.value.id}}"></a>
             </div>
         </div>
@@ -33,10 +32,10 @@
 
 <script th:inline="javascript">
     /*<![CDATA[*/
-    var championsData = /*[[${championsData}]]*/ {};
+    const championsData = /*[[${championsData}]]*/ {};
     var championsArray = Object.values(championsData);
     var selectedTags = [];
-
+    var version = /*[[${version}]]*/ "";
     console.log("championsData:", championsData);
 
     function filterByTags(tags) {
@@ -59,7 +58,7 @@
 
             var img = document.createElement("img");
             img.id = "skin";
-            img.src = 'https://ddragon.leagueoflegends.com/cdn/13.23.1/img/champion/' + champion.id + '.png';
+            img.src = 'https://ddragon.leagueoflegends.com/cdn/'+version+'/img/champion/' + champion.id + '.png';
 
             var championName = document.createElement("a");
             championName.classList.add("champion-name");

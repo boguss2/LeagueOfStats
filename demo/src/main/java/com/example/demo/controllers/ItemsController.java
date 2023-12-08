@@ -27,6 +27,7 @@ public class ItemsController {
         String itemsVersion = versionsData.getN().getItem();
         AllItemsData itemsData = apiService.fetchItemsData("http://ddragon.leagueoflegends.com/cdn/" + itemsVersion + "/data/en_US/item.json");
 
+        model.addAttribute("version", itemsVersion);
         model.addAttribute("itemsData", itemsData.getData());
         return "mainItems";
     }
@@ -41,6 +42,7 @@ public class ItemsController {
         Data item = itemsData.findItem(name);
         if (item!= null) {
             //dodac do modelu wszystko do porownania
+            model.addAttribute("version", itemsVersion);
             model.addAttribute("itemData", item);
             model.addAttribute("itemGold", item.getGold());
             model.addAttribute("itemImage", item.getImage());
@@ -50,5 +52,15 @@ public class ItemsController {
             model.addAttribute("message", "Item not found");
             return "mainItems";
         }
+   }
+
+   @GetMapping("/items/calculate")
+    public String itemsCalculate(Model model){
+
+       //POBRANIE DANYCH Z API(wersja jest pobierana z NA)
+       String itemsVersion = versionsData.getN().getItem();
+       AllItemsData itemsData = apiService.fetchItemsData("http://ddragon.leagueoflegends.com/cdn/" + itemsVersion + "/data/en_US/item.json");
+
+        return "calculateItems";
    }
 }

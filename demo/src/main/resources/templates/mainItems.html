@@ -36,7 +36,7 @@
     <div class="row">
         <div class="col-lg-3 col-md-4 col-sm-6" th:each="entry: ${itemsData}" data-classes="${entry.value.tags}">
             <div class="item" data-tags="${entry.value.tags}">
-                <img id="itemImage" th:src="${'https://ddragon.leagueoflegends.com/cdn/13.23.1/img/item/' + entry.value.image.full}">
+                <img id="itemImage" th:src="${'https://ddragon.leagueoflegends.com/cdn/'+ version +'/img/item/' + entry.value.image.full}">
                 <a class="item-name" th:text="${entry.value.name}" th:href="@{'/items/' + ${entry.value.name}}"></a>
             </div>
         </div>
@@ -48,6 +48,7 @@
     var itemsData = /*[[${itemsData}]]*/ {};
     var itemsArray = Object.values(itemsData);
     var selectedTags = [];
+    var version = /*[[${version}]]*/ "";
 
     console.log("itemsData:", itemsData);
 
@@ -71,7 +72,7 @@
 
             var img = document.createElement("img");
             img.id = "itemImage";
-            img.src = 'https://ddragon.leagueoflegends.com/cdn/13.23.1/img/item/' + item.image.full;
+            img.src = 'https://ddragon.leagueoflegends.com/cdn/'+ version +'/img/item/' + item.image.full;
 
             var itemName = document.createElement("a");
             itemName.classList.add("item-name");

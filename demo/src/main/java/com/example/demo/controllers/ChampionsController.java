@@ -28,7 +28,8 @@ public class ChampionsController {
         String championsVersion = versionsData.getN().getChampion();
 
         AllChampionsData championsData=apiService.fetchChampionsData("http://ddragon.leagueoflegends.com/cdn/"+championsVersion+"/data/en_US/champion.json");
-
+        
+        model.addAttribute("version", championsVersion);
         model.addAttribute("championsData", championsData.getData());
         return "mainChampions";
     }

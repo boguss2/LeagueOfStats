@@ -9,7 +9,7 @@
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 <!--usunąć <text> z description, zdjecia itemow-->
 <div class="container">
-    <img id="img" th:src="${'https://static.bigbrain.gg/assets/lol/riot_static/13.23.1/img/item/' + itemImage.full}">
+    <img id="img" th:src="${'https://static.bigbrain.gg/assets/lol/riot_static/'+version+'/img/item/' + itemImage.full}">
     <h1 th:text="${itemData.name}"></h1>
     <p th:text="${itemData.plaintext}"></p>
     <p th:text="${itemGold.total}"></p>
