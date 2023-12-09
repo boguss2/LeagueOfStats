@@ -1,10 +1,46 @@
 <!DOCTYPE html>
   <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-      <meta charset="UTF-8">
-      <title>Title</title>
-  </head>
-  <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Items List</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/championsMain.css}">
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+</head>
+<body>
 
-  </body>
+<form id="searchForm">
+    <label for="nick">Nick:</label>
+    <input type="text" id="nick" name="nick" required>
+
+    <label for="tag">Tag:</label>
+    <input type="text" id="tag" name="tag" required>
+
+    <label for="server">Server:</label>
+    <select id="server" name="server">
+        <option value="EUW" selected>EUW</option>
+        <option value="EUNE">EUNE</option>
+        <option value="NA">NA</option>
+    </select>
+
+    <button type="button" onclick="search()">Search</button>
+</form>
+
+<script>
+    function search() {
+        // Pobierz wartości z pól formularza
+        var nick = document.getElementById("nick").value;
+        var tag = document.getElementById("tag").value;
+        var server = document.getElementById("server").value;
+
+        // Zbuduj adres URL
+        var url = "/profiles/" + server + "/" + tag + "/" + nick;
+
+        // Przekieruj na nowy adres URL
+        window.location.href = url;
+    }
+</script>
+
+</body>
 </html>
