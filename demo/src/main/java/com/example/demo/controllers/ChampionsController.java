@@ -55,9 +55,7 @@ public class ChampionsController {
             model.addAttribute("championStats", champion.getChampionData(formatedName).getStats());
             model.addAttribute("championSpells", champion.getChampionData(formatedName).getSpells());
             model.addAttribute("championPassive", champion.getChampionData(formatedName).getPassive());
-// Update your controller method to include the list of champions
             model.addAttribute("championsData", championsData.getData().values());
-
 
             return "infoChampion";
         }

@@ -1,13 +1,13 @@
 package com.example.demo.model.items;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class AllItemsData {
     private String type;
     private String version;
     private Basic basic;
-    private Map<String, Data> data;
+    private HashMap<String, Data> data;
 
     private List<ItemGroup> groups;
 
@@ -23,7 +23,7 @@ public class AllItemsData {
         return basic;
     }
 
-    public Map<String, Data> getData() {
+    public HashMap<String, Data> getData() {
         return data;
     }
 

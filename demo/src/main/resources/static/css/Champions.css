@@ -5,7 +5,9 @@
 }
 
 html, body {
+    max-height: 100vh;
     height: 100%;
+    overflow-y: auto;
 }
 
 body {
@@ -16,11 +18,6 @@ body {
     padding-bottom: 8%;
 }
 
-.container {
-    max-height: 100vh;
-    overflow-y: auto;
-    height: 100%;
-}
 
 .vs {
     overflow-y: hidden;
