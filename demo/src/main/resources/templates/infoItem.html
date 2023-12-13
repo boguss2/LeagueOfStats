@@ -1,5 +1,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+<!--    kolorki flavor text, tabelka na staty, row col-md-->
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}">
@@ -7,7 +8,6 @@
 </head>
 <body class="vh-100 overflow-hidden">
 <div th:replace="~{fragments/navbar :: navbar}"></div>
-<!--usunąć <text> z description, zdjecia itemow-->
 <div class="container">
     <img id="img" th:src="${'https://static.bigbrain.gg/assets/lol/riot_static/'+version+'/img/item/' + itemImage.full}">
     <h1 th:text="${itemData.name}"></h1>

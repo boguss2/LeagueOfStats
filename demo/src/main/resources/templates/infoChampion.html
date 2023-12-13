@@ -6,224 +6,273 @@
     <title th:text="${championData.name}">Title</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/Champions.css}">
+<!--    afera scrollowa-->
+    <!--            Widoczność nazwy ludzika, roztapanie sie zdj po bokach-->
+    <!--        box na lore,  wyszukiwanie  bez skakania i wygląd listy wyników
+         wygląd tabelki-->
+<!--cień na napisy w galerii, fade na tło-->
 </head>
 <header>
     <div th:replace="~{fragments/navbar :: navbar}"></div>
 </header>
 <body>
-<div class="container">
-    <div id="presentation" class="">
-        <img th:src="${'https://ddragon.leagueoflegends.com/cdn/' + version +'/img/champion/' + championImage.full}">
-        <h3 th:text="${championData.title}"></h3>
-        <h1 th:text="${championData.name}"></h1>
-
-        <p th:text="${championData.lore}"></p>
-    </div>
-
-    <div class="search-container">
-        <label for="searchChampion">Search Champion:</label>
-        <input type="text" id="searchChampion" oninput="filterChampions()" placeholder="Type to search...">
-    </div>
-
-    <ul id="championList" class="champion-list"></ul>
-    <script th:inline="javascript">
-        function filterChampions() {
-            var input, filter, ul, li, a, i, txtValue;
-            input = document.getElementById('searchChampion');
-            filter = input.value.toUpperCase();
-            ul = document.getElementById('championList');
-            li = ul.getElementsByTagName('li');
-
-            ul.innerHTML = '';
-
-            if (filter.trim() === '') {
-                return;
-            }
-
-            var resultCount = 0;
-
-            [[${championsData}]].forEach(function (champion) {
-                txtValue = champion.name.toUpperCase();
-                if (txtValue.includes(filter) && resultCount < 4) {
-                    var li = document.createElement('li');
-                    li.textContent = champion.name;
-                    li.onclick = function () {
-                        selectChampion(champion.id);  // Pass champion ID
-                    };
-                    ul.appendChild(li);
-                    resultCount++;
-                }
-            });
-        }
-
-        function selectChampion(clickedChampionId) {
-            var currentChampion = window.location.pathname.split('/')[2];
-            var targetUrl = '/champions/' + currentChampion + '/vs/' + clickedChampionId;  // Use ID instead of name
-            window.location.href = targetUrl;
-        }
-
-        document.getElementById('searchChampion').addEventListener('input', function () {
-            filterChampions();
-        });
-    </script>
-
-    <p th:text="${championData.tags}"></p>
-    <p th:text="${championData.partype}"></p>
-
-    <label for="selectNumber">Select a level:</label>
-    <select id="selectNumber" name="selectNumber">
-        <option value="1" selected>Level 1</option>
-        <script th:inline="javascript">
-            var selectElement = document.getElementById("selectNumber");
-
-            for (var i = 2; i <= 18; i++) {
-                var option = document.createElement("option");
-                option.value = i;
-                option.textContent = "Level " + i;
-                selectElement.appendChild(option);
-            }
-        </script>
-    </select>
-
-    <br><br>
-    <!-- Your existing HTML code -->
-
-    <!-- Display champion stats -->
-    <div class="row" id="championStatsContainer">
-        <!-- Stats will be dynamically added here -->
-    </div>
-
-    <script th:inline="javascript">
-        // Existing JavaScript code
-        function updateStat(selectedLevel, statName) {
-            var statElement = document.getElementById(statName);
-            var perLevelElement = document.getElementById(statName + "perlevel");
-
-            // Retrieve the base value for the stat
-            var baseValue = parseFloat(statElement.getAttribute("data-base")) || 0;
-            var perLevelValue = parseFloat(perLevelElement.textContent) || 0;
-
-            // Calculate the updated value based on the selected level
-            var calculatedValue = baseValue + perLevelValue * (selectedLevel - 1);
-
-            // Check if there are decimal places before applying toFixed
-            var formattedValue = calculatedValue % 1 === 0 ? calculatedValue : calculatedValue.toFixed(2);
-
-            // Update the displayed value
-            statElement.textContent = formattedValue;
-        }
-
-        // Function to display champion stats
-        function displayChampionStats(championStats) {
-            var championStatsContainer = document.getElementById("championStatsContainer");
-            championStatsContainer.innerHTML = ""; // Clear existing stats
-
-            var table = document.createElement("table");
-            table.classList.add("table");
-
-            // Create a row for the title
-            var titleRow = table.insertRow();
-            var titleCell = titleRow.insertCell(0);
-            titleCell.colSpan = 4; // Set colspan to cover all columns
-            titleCell.style.textAlign = "center";
-            titleCell.innerHTML = "<strong>tabelka</strong>";
-
-            for (var key in championStats) {
-                // Check if the per level value is defined
-                if (championStats[key + "perlevel"] !== undefined) {
-                    var row = table.insertRow();
-
-                    // Display stat name in the first cell
-                    var cell1 = row.insertCell(0);
-                    cell1.innerHTML = key + ":";
-
-                    // Display stat value in the second cell
-                    var cell2 = row.insertCell(1);
-                    cell2.id = key; // Set id for the stat element
-                    cell2.setAttribute("data-base", championStats[key]); // Set base value for the stat
-                    cell2.innerHTML = championStats[key];
-
-                    // Display per level stat in the third cell
-                    var cell3 = row.insertCell(2);
-                    cell3.innerHTML = key + " per level:";
-
-                    // Display per level value in the fourth cell
-                    var cell4 = row.insertCell(3);
-                    cell4.id = key + "perlevel"; // Set id for the per level stat element
-                    cell4.innerHTML = championStats[key + "perlevel"];
-                }
-            }
-
-            championStatsContainer.appendChild(table);
-        }
-
-        // Retrieve champion stats from Thymeleaf model
-        var championStats = /*[[${championStats}]]*/ {};
-
-        // Call the function to display champion stats
-        displayChampionStats(championStats);
-
-        // Add event listener to update stats on select change
-        document.getElementById("selectNumber").addEventListener("change", function () {
-            var selectedLevel = parseInt(this.value);
-
-            // Iterate over each stat element and update the value based on the selected level
-            for (var key in championStats) {
-                if (championStats[key + "perlevel"] !== undefined) {
-                    updateStat(selectedLevel, key);
-                }
-            }
-        });
-
-        // Function to update stat based on the selected level
-
-        // Existing JavaScript code
-        /*]]>*/
-    </script>
-
-    <div id="spell" class="container">
-        <h2>Spells</h2>
         <div class="row">
-            <div class="col-md-2 d-flex justify-content-center">
-                <label>
-                    <input type="radio" name="s" class="visually-hidden">
-                    <img th:src="${'https://ddragon.leagueoflegends.com/cdn/' + version + '/img/passive/' + championPassive.image.full}"
-                         th:data-name="${championPassive.name}" th:data-description="${championPassive.description}"
-                         onclick="showSpell(this)">
-                </label>
-            </div>
-            <div th:each="spell: ${championSpells}" class="col-md-2 d-flex justify-content-center">
-                <label>
-                    <input type="radio" name="s" class="visually-hidden">
-                    <img th:src="${'https://ddragon.leagueoflegends.com/cdn/' + version + '/img/spell/' + spell.image.full}"
-                         th:data-name="${spell.name}" th:data-description="${spell.description}"
-                         onclick="showSpell(this)">
-                </label>
+
+            <div id="presentation" class="col-md-12 d-flex justify-content-center">
+                <div class="position-relative align-bottom text-white">
+                    <img th:src="${'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/' + championData.id + '_' + 0 + '.jpg'}" class="img-fluid w-100 h-100" alt="Your Image"> <!-- Replace 'your-image.jpg' with your image path -->
+                    <div class="position-absolute top-50 start-50 translate-middle text-center">
+                        <h3 th:text="${championData.name}"></h3>
+                        <h1 th:text="${championData.title}"></h1>
+                    </div>
+                </div>
             </div>
         </div>
+
         <div class="row">
-            <div id="spellText" class="col-md-6">
-                <h3 id="spellName"></h3>
-                <p id="spellDescription"></p>
+            <div id="contentL" class="col-md-2">
+            </div>
+
+            <div id="content" class="col-md-8">
+
+                    <p th:text="${championData.lore}"></p>
+                    <div class="search-container">
+                        <label for="searchChampion">Search Champion:</label>
+                        <input type="text" id="searchChampion" oninput="filterChampions()" placeholder="Type to search...">
+                    </div>
+
+                    <ul id="championList" class="champion-list"></ul>
+                    <script th:inline="javascript">
+                        function filterChampions() {
+                    var input, filter, ul, li, a, i, txtValue;
+                    input = document.getElementById('searchChampion');
+                    filter = input.value.toUpperCase();
+                    ul = document.getElementById('championList');
+                    li = ul.getElementsByTagName('li');
+
+                        ul.innerHTML = '';
+
+                        if (filter.trim() === '') {
+                            return;
+                        }
+
+                        var resultCount = 0;
+
+                        [[${championsData}]].forEach(function (champion) {
+                            txtValue = champion.name.toUpperCase();
+                            if (txtValue.includes(filter) && resultCount < 4) {
+                                var li = document.createElement('li');
+                                li.textContent = champion.name;
+                                li.onclick = function () {
+                                    selectChampion(champion.id);  // Pass champion ID
+                                };
+                                ul.appendChild(li);
+                                resultCount++;
+                            }
+                        });
+                    }
+
+                    function selectChampion(clickedChampionId) {
+                        var currentChampion = window.location.pathname.split('/')[2];
+                        var targetUrl = '/champions/' + currentChampion + '/vs/' + clickedChampionId;  // Use ID instead of name
+                        window.location.href = targetUrl;
+                    }
+
+                    document.getElementById('searchChampion').addEventListener('input', function () {
+                        filterChampions();
+                    });
+                </script>
+
+                <p th:text="${championData.tags}"></p>
+                <p th:text="${championData.partype}"></p>
+
+                <label for="selectNumber">Select a level:</label>
+                <select id="selectNumber" name="selectNumber">
+                    <option value="1" selected>Level 1</option>
+                    <script th:inline="javascript">
+                        var selectElement = document.getElementById("selectNumber");
+
+                        for (var i = 2; i <= 18; i++) {
+                            var option = document.createElement("option");
+                            option.value = i;
+                            option.textContent = "Level " + i;
+                            selectElement.appendChild(option);
+                        }
+                    </script>
+                </select>
+
+                <br><br>
+                <!-- Your existing HTML code -->
+
+                <!-- Display champion stats -->
+                <div class="row" id="championStatsContainer">
+                    <!-- Stats will be dynamically added here -->
+                </div>
+
+                <script th:inline="javascript">
+                    // Existing JavaScript code
+                    function updateStat(selectedLevel, statName) {
+                        var statElement = document.getElementById(statName);
+                        var perLevelElement = document.getElementById(statName + "perlevel");
+
+                        // Retrieve the base value for the stat
+                        var baseValue = parseFloat(statElement.getAttribute("data-base")) || 0;
+                        var perLevelValue = parseFloat(perLevelElement.textContent) || 0;
+
+                        // Calculate the updated value based on the selected level
+                        var calculatedValue = baseValue + perLevelValue * (selectedLevel - 1);
+
+                        // Check if there are decimal places before applying toFixed
+                        var formattedValue = calculatedValue % 1 === 0 ? calculatedValue : calculatedValue.toFixed(2);
+
+                        // Update the displayed value
+                        statElement.textContent = formattedValue;
+                    }
+
+                    // Function to display champion stats
+                    function displayChampionStats(championStats) {
+                        var championStatsContainer = document.getElementById("championStatsContainer");
+                        championStatsContainer.innerHTML = ""; // Clear existing stats
+
+                        var table = document.createElement("table");
+                        table.classList.add("table");
+
+                        // Create a row for the title
+                        var titleRow = table.insertRow();
+                        var titleCell = titleRow.insertCell(0);
+                        titleCell.colSpan = 4; // Set colspan to cover all columns
+                        titleCell.style.textAlign = "center";
+                        titleCell.innerHTML = "<strong>tabelka</strong>";
+
+                        for (var key in championStats) {
+                            // Check if the per level value is defined
+                            if (championStats[key + "perlevel"] !== undefined) {
+                                var row = table.insertRow();
+
+                                // Display stat name in the first cell
+                                var cell1 = row.insertCell(0);
+                                cell1.innerHTML = key + ":";
+
+                                // Display stat value in the second cell
+                                var cell2 = row.insertCell(1);
+                                cell2.id = key; // Set id for the stat element
+                                cell2.setAttribute("data-base", championStats[key]); // Set base value for the stat
+                                cell2.innerHTML = championStats[key];
+
+                                // Display per level stat in the third cell
+                                var cell3 = row.insertCell(2);
+                                cell3.innerHTML = key + " per level:";
+
+                                // Display per level value in the fourth cell
+                                var cell4 = row.insertCell(3);
+                                cell4.id = key + "perlevel"; // Set id for the per level stat element
+                                cell4.innerHTML = championStats[key + "perlevel"];
+                            }
+                        }
+
+                        championStatsContainer.appendChild(table);
+                    }
+
+                    // Retrieve champion stats from Thymeleaf model
+                    var championStats = /*[[${championStats}]]*/ {};
+
+                    // Call the function to display champion stats
+                    displayChampionStats(championStats);
+
+                    // Add event listener to update stats on select change
+                    document.getElementById("selectNumber").addEventListener("change", function () {
+                        var selectedLevel = parseInt(this.value);
+
+                        // Iterate over each stat element and update the value based on the selected level
+                        for (var key in championStats) {
+                            if (championStats[key + "perlevel"] !== undefined) {
+                                updateStat(selectedLevel, key);
+                            }
+                        }
+                    });
+
+                    // Function to update stat based on the selected level
+
+                    // Existing JavaScript code
+                    /*]]>*/
+                </script>
+
+                <div id="spell" class="container">
+                    <h2>Spells</h2>
+                    <div class="row">
+                        <div class="col-md-2 d-flex justify-content-center">
+                            <label>
+                                <input type="radio" name="s" class="visually-hidden">
+                                <img th:src="${'https://ddragon.leagueoflegends.com/cdn/' + version + '/img/passive/' + championPassive.image.full}"
+                                     th:data-name="${championPassive.name}" th:data-description="${championPassive.description}"
+                                     onclick="showSpell(this)">
+                            </label>
+                        </div>
+                        <div th:each="spell: ${championSpells}" class="col-md-2 d-flex justify-content-center">
+                            <label>
+                                <input type="radio" name="s" class="visually-hidden">
+                                <img th:src="${'https://ddragon.leagueoflegends.com/cdn/' + version + '/img/spell/' + spell.image.full}"
+                                     th:data-name="${spell.name}" th:data-description="${spell.description}"
+                                     onclick="showSpell(this)">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="spellText" class="col-md-6">
+                            <h3 id="spellName"></h3>
+                            <p id="spellDescription"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    function formatOutput(inputText) {
+                        var regex = /<[^>]*>/g;
+                        var result = inputText.replace(regex, '');
+                        return result;
+                    }
+                    function showSpell(img) {
+                        var name = img.getAttribute("data-name");
+                        var description = img.getAttribute("data-description");
+                        var formatedD = formatOutput(description);
+                        document.getElementById("spellName").innerText = name;
+                        document.getElementById("spellDescription").innerText = formatedD;
+                    }
+                </script>
+            </div>
+
+            <div id="contentR" class="col-md-2">
             </div>
         </div>
-    </div>
 
-    <script>
-        function formatOutput(inputText) {
-            var regex = /<[^>]*>/g;
-            var result = inputText.replace(regex, '');
-            return result;
-        }
-        function showSpell(img) {
-            var name = img.getAttribute("data-name");
-            var description = img.getAttribute("data-description");
-            var formatedD = formatOutput(description);
-            document.getElementById("spellName").innerText = name;
-            document.getElementById("spellDescription").innerText = formatedD;
-        }
-    </script>
-</div>
+        <div class="container">
+            <h2 class="my-4 text-center">Skins</h2>
 
+            <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+
+                    <!-- Iterujemy przez listę championSkins za pomocą Thymeleafa -->
+                    <div th:each="skin, status : ${championSkins}" th:classappend="${status.index == 0} ? 'carousel-item active' : 'carousel-item'">
+                        <img th:src="${'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/' + championData.id + '_' + skin.num + '.jpg'}" class="d-block w-100" alt="Champion Skin">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5 th:text="${championData.name}"></h5>
+                            <p th:text="${skin.name}"></p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Poprzedni</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Następny</span>
+                </button>
+            </div>
+        </div>
+
+    <script th:src="@{/webjars/bootstrap/5.3.0/js/bootstrap.min.js}"></script>
 </body>
 </html>
