@@ -18,7 +18,7 @@ import java.util.List;
 @Service
 public class ApiService{
     private final RestTemplate restTemplate;
-    private final String key="";
+    private final String key="RGAPI-23adaaae-10db-4bb8-9128-503c90403957";
     @Autowired
     public ApiService(RestTemplate restTemplate){
         this.restTemplate = restTemplate;
