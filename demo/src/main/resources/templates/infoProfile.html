@@ -22,7 +22,6 @@
         <div class="col-md-1 bg-primary">
             <p>Left Column</p>
         </div>
-<<<<<<< Updated upstream
 
         <div class="col-md-10 bg-secondary">
             <div class="row">
@@ -49,46 +48,5 @@
     </div>
 </div>
 
-=======
-
-        <div class="col-md-10 bg-secondary">
-            <div class="row">
-                <div class="col-auto">
-                    <div class="d-flex flex-column align-items-center">
-                        <img th:src="${'http://ddragon.leagueoflegends.com/cdn/13.24.1/img/profileicon/'+summoner.profileIconId+'.png'}" class="img-fluid" alt="Profile Icon" style="max-width: 100%">
-                        <p th:text="'Level:'+${summoner.summonerLevel}" class="text-white"></p>
-                    </div>
-                </div>
-
-                <div class="col-md-8">
-                    <h1 th:text="${profile.gameName}+'#'+${profile.tagLine}"></h1>
-                    <h3 th:text="'Ex: '+${summoner.name}"></h3>
-                </div>
-            </div>
-            <div>
-                <h1>Match history:</h1>
-            </div>
-        </div>
-
-        <div class="col-md-1 bg-success">
-            <p>Right Column</p>
-        </div>
-    </div>
-</div>
-
-<<<<<<< HEAD
-<h2>Summoner</h2>
-<p th:text="${summoner.accountId}"></p>
-<p th:text="${summoner.profileIconId}"></p>
-<p th:text="${summoner.revisionDate}"></p>
-<p th:text="${summoner.name}"></p>
-<p th:text="${summoner.id}"></p>
-<p th:text="${summoner.puuid}"></p>
-<p th:text="${summoner.summonerLevel}"></p>
-
-<p th:text="${match.info.participants[0].championName}"></p>
-=======
->>>>>>> 464666f5400268b0b09301f7b78c8c8b289d5a3a
->>>>>>> Stashed changes
 </body>
 </html>
