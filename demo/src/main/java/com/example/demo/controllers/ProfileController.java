@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.model.profiles.Match;
 import com.example.demo.model.profiles.Profile;
 import com.example.demo.model.profiles.Summoner;
 import com.example.demo.service.ApiService;
@@ -32,9 +33,13 @@ public class ProfileController {
         for(String match:matchHistory){
 
         }
+
+        Match match = apiService.fetchMatch(server, matchHistory.get(0));
+
         model.addAttribute("profile", profile);
         model.addAttribute("summoner", summoner);
         model.addAttribute("matchHistory", matchHistory);
+        model.addAttribute("match", match);
         return "infoProfile";
     }
 }
