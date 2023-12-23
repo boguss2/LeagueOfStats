@@ -39,44 +39,59 @@
             <div>
                 <h1>Match history:</h1>
 
-                <!-- Repeat this div for each match -->
                 <div class="match-container">
-                    <div class="col-md-auto">
-
-                    </div>
-                    <div class="col-md-3">
+                    <div class="container">
                         <div class="row">
-                            <div class="col-md-6" id="leftColumn">
-                                <h3>Blue Side</h3>
-                                <div th:each="participant, iterStat : ${match.info.participants}" th:if="${iterStat.index < match.info.participants.size()/2}">
-                                        <div class="champion-icon-container">
-                                            <img th:src="${'http://ddragon.leagueoflegends.com/cdn/13.24.1/img/champion/' + participant.championName + '.png'}"
-                                                 alt="Champion Icon" class="champion-icon">
-                                            <p th:text="${participant.summonerName}" class="summoner-name"></p>
-                                            <p th:text="${participant.championName}" class="champion-name"></p>
-                                        </div>
+                            <div class="col-md-auto">
+                                <div class="position-relative align-bottom text-white d-flex flex-column align-items-center">
+                                    <img th:src="${'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/' + match.info.participants[0].championName + '_' + 0 + '.jpg'}"
+                                         class="w-100 h-100"
+                                         alt="Your Image"
+                                         style="max-width: 500px; width: 100%;">
+                                    <div class="position-absolute top-50 start-50 translate-middle text-center">
+                                        <h3 th:text="${match.info.participants[0].championName}"></h3>
+                                        <h1 th:text="${match.info.participants[0].kills + ' / ' + match.info.participants[0].deaths + ' / ' + match.info.participants[0].assists}"></h1>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="col-md-6" id="rightColumn">
-                                <h3>Red Side</h3>
-                                <div th:each="participant, iterStat : ${match.info.participants}" th:if="${iterStat.index >= match.info.participants.size()/2}">
-                                        <div class="champion-icon-container" style="text-align: right;">
-                                            <p th:text="${participant.summonerName}" class="summoner-name"></p>
-                                            <p th:text="${participant.championName}" class="champion-name"></p>
-                                            <img th:src="${'http://ddragon.leagueoflegends.com/cdn/13.24.1/img/champion/' + participant.championName + '.png'}"
-                                                 alt="Champion Icon" class="champion-icon">
+                            <div class="col-md-auto">
+                                <div th:each="index : ${#numbers.sequence(0, 6)}" class="item-container">
+                                    <p th:text="${match.info.participants[0]['item' + index]}"></p>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-auto">
+                                <div class="row">
+                                    <div class="col-md-6" id="leftColumn">
+                                        <h3>Blue Side</h3>
+                                        <div th:each="participant, iterStat : ${match.info.participants}" th:if="${iterStat.index < match.info.participants.size()/2}" class="champion-icon-container">
+                                                <img th:src="${'http://ddragon.leagueoflegends.com/cdn/13.24.1/img/champion/' + participant.championName + '.png'}"
+                                                     alt="Champion Icon" class="champion-icon">
+                                                <p th:text="${participant.summonerName}" class="summoner-name"></p>
+                                                <p th:text="${participant.championName}" class="champion-name"></p>
                                         </div>
+                                    </div>
+
+                                    <div class="col-md-6" id="rightColumn">
+                                        <h3>Red Side</h3>
+                                        <div th:each="participant, iterStat : ${match.info.participants}" th:if="${iterStat.index >= match.info.participants.size()/2}" class="champion-icon-container">
+                                                <p th:text="${participant.summonerName}" class="summoner-name"></p>
+                                                <p th:text="${participant.championName}" class="champion-name"></p>
+                                                <img th:src="${'http://ddragon.leagueoflegends.com/cdn/13.24.1/img/champion/' + participant.championName + '.png'}"
+                                                     alt="Champion Icon" class="champion-icon">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
+</div>
             </div>
-
-
-        </div>
-
         <div class="col-md-1 bg-success">
             <p>Right Column</p>
         </div>
