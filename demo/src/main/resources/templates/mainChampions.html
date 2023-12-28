@@ -9,19 +9,19 @@
     <title>Champions List</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/championsMain.css}">
-    <div th:replace="~{fragments/navbar :: navbar}"></div>
 </head>
-<body>
+<body class="vh-100">
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 <div class="container">
     <input type="text" id="myInput" oninput="filterNames()" placeholder="Search for champions..">
-    <button class="class-button" onclick="toggleFilter('All')">All</button>
-    <button class="class-button" onclick="toggleFilter('Assassin')">Assassin</button>
-    <button class="class-button" onclick="toggleFilter('Fighter')">Fighter</button>
-    <button class="class-button" onclick="toggleFilter('Mage')">Mage</button>
-    <button class="class-button" onclick="toggleFilter('Marksman')">Marksman</button>
-    <button class="class-button" onclick="toggleFilter('Support')">Support</button>
-    <button class="class-button" onclick="toggleFilter('Tank')">Tank</button>
-    <div id="searchResultsContainer"></div>
+    <div class="searchStyle" id="searchResultsContainer"></div>
+    <button type="button" class="btn btn-secondary" onclick="toggleFilter('All')">All</button>
+    <button type="button" class="btn btn-secondary" data-bs-toggle="button" onclick="toggleFilter('Assassin')">Assassin</button>
+    <button type="button" class="btn btn-secondary" data-bs-toggle="button" onclick="toggleFilter('Fighter')">Fighter</button>
+    <button type="button" class="btn btn-secondary" data-bs-toggle="button" onclick="toggleFilter('Mage')">Mage</button>
+    <button type="button" class="btn btn-secondary" data-bs-toggle="button" onclick="toggleFilter('Marksman')">Marksman</button>
+    <button type="button" class="btn btn-secondary" data-bs-toggle="button" onclick="toggleFilter('Support')">Support</button>
+    <button type="button" class="btn btn-secondary" data-bs-toggle="button" onclick="toggleFilter('Tank')">Tank</button>
 </div>
 <div class="container">
     <div class="row">
@@ -57,7 +57,7 @@
 
         champions.forEach(champion => {
             var colDiv = document.createElement("div");
-            colDiv.classList.add("col-lg-3", "col-md-4", "col-sm-6");
+            colDiv.classList.add("col-lg-2", "col-md-4", "col-sm-6");
 
             var championDiv = document.createElement("div");
             championDiv.classList.add("champion");
@@ -143,7 +143,7 @@
             }
         }
 
-        document.getElementById("searchResultsContainer").style.display = "block";
+        document.getElementById("searchResultsContainer").style.display = "";
     }
 
     function capitalize(str) {
@@ -151,5 +151,6 @@
     }
     /*]]>*/
 </script>
+<script th:src="@{/webjars/bootstrap/5.3.0/js/bootstrap.min.js}"></script>
 </body>
 </html>

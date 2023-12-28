@@ -14,7 +14,7 @@ body {
     margin-right: 10px;
 }
 
-.class-button.selected {
+.btn.selected {
     background-color: #4CAF50;
     color: white;
 }
@@ -56,4 +56,16 @@ body {
 
 .summoner-name {
     color: #555;
+}
+
+#searchResultsContainer{
+    position: absolute;
+    background-color: #1c1c1c;
+}
+
+.searchStyle a{
+    text-decoration: none;
+    margin-top: 10px;
+    color: red;
+    font-weight: bold;
 }
