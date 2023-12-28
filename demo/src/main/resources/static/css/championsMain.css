@@ -1,6 +1,7 @@
 body {
     background-color: #1c1c1c;
     color: #ffffff;
+
 }
 @media (max-width: 991px) {
     .sidebar {
@@ -19,19 +20,22 @@ body {
 }
 
 .champion {
-    background-color: white;
+    text-align: center;
+    background-color: navajowhite;
     margin-bottom: 20px;
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+
 .champion-name {
     display: block;
     margin-top: 10px;
     text-align: center;
     text-decoration: none;
-    color: green;
+    color: red;
+    font-weight: bold;
 }
 
 .participant-box {
@@ -47,10 +51,7 @@ body {
 .champion-icon {
     max-width: 50px; /* Adjust the size as needed */
     max-height: 50px; /* Adjust the size as needed */
-}
-
-.champion-name {
-    font-weight: bold;
+    display: inline-block;
 }
 
 .summoner-name {

@@ -12,23 +12,26 @@
     <div th:replace="~{fragments/navbar :: navbar}"></div>
 </head>
 <body>
-<input type="text" id="myInput" oninput="filterNames()" placeholder="Search for champions..">
-<button class="class-button" onclick="toggleFilter('All')">All</button>
-<button class="class-button" onclick="toggleFilter('Assassin')">Assassin</button>
-<button class="class-button" onclick="toggleFilter('Fighter')">Fighter</button>
-<button class="class-button" onclick="toggleFilter('Mage')">Mage</button>
-<button class="class-button" onclick="toggleFilter('Marksman')">Marksman</button>
-<button class="class-button" onclick="toggleFilter('Support')">Support</button>
-<button class="class-button" onclick="toggleFilter('Tank')">Tank</button>
-<div id="searchResultsContainer"></div>
-
+<div class="container">
+    <input type="text" id="myInput" oninput="filterNames()" placeholder="Search for champions..">
+    <button class="class-button" onclick="toggleFilter('All')">All</button>
+    <button class="class-button" onclick="toggleFilter('Assassin')">Assassin</button>
+    <button class="class-button" onclick="toggleFilter('Fighter')">Fighter</button>
+    <button class="class-button" onclick="toggleFilter('Mage')">Mage</button>
+    <button class="class-button" onclick="toggleFilter('Marksman')">Marksman</button>
+    <button class="class-button" onclick="toggleFilter('Support')">Support</button>
+    <button class="class-button" onclick="toggleFilter('Tank')">Tank</button>
+    <div id="searchResultsContainer"></div>
+</div>
 <div class="container">
     <div class="row">
-        <div class="col-lg-3 col-md-4 col-sm-6" th:each="entry: ${championsData}" data-classes="${entry.value.tags}">
-            <div class="champion" data-tags="${entry.value.tags}">
-                <img id="skin" th:src="${'https://ddragon.leagueoflegends.com/cdn/'+ version +'/img/champion/' + entry.value.id + '.png'}">
-                <a class="champion-name" th:text="${entry.value.id}" th:href="@{'/champions/' + ${entry.value.id}}"></a>
-            </div>
+        <div class="col-lg-2 col-md-3 col-sm-5" th:each="entry: ${championsData}" data-classes="${entry.value.tags}">
+            <a th:href="@{'/champions/' + ${entry.value.id}}">
+                <div class="champion" data-tags="${entry.value.tags}">
+                    <img id="skin" class="champion-icon" th:src="${'https://ddragon.leagueoflegends.com/cdn/'+ version +'/img/champion/' + entry.value.id + '.png'}">
+                    <span class="champion-name" th:text="${entry.value.id}"></span>
+                </div>
+            </a>
         </div>
     </div>
 </div>
