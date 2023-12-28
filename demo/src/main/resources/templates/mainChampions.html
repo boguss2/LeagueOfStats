@@ -12,17 +12,21 @@
 </head>
 <body class="vh-100">
 <div th:replace="~{fragments/navbar :: navbar}"></div>
-<div class="container">
+<div class="container" style="margin-bottom: 10px">
     <input type="text" id="myInput" oninput="filterNames()" placeholder="Search for champions..">
     <div class="searchStyle" id="searchResultsContainer"></div>
-    <button type="button" class="btn btn-secondary" onclick="toggleFilter('All')">All</button>
-    <button type="button" class="btn btn-secondary" data-bs-toggle="button" onclick="toggleFilter('Assassin')">Assassin</button>
-    <button type="button" class="btn btn-secondary" data-bs-toggle="button" onclick="toggleFilter('Fighter')">Fighter</button>
-    <button type="button" class="btn btn-secondary" data-bs-toggle="button" onclick="toggleFilter('Mage')">Mage</button>
-    <button type="button" class="btn btn-secondary" data-bs-toggle="button" onclick="toggleFilter('Marksman')">Marksman</button>
-    <button type="button" class="btn btn-secondary" data-bs-toggle="button" onclick="toggleFilter('Support')">Support</button>
-    <button type="button" class="btn btn-secondary" data-bs-toggle="button" onclick="toggleFilter('Tank')">Tank</button>
+
+    <div class="btn-group" role="group" aria-label="Champion Categories">
+        <button type="button" class="btn btn-secondary" onclick="toggleFilter('All')">All</button>
+        <button type="button" class="btn btn-secondary" onclick="toggleFilter('Assassin')">Assassin</button>
+        <button type="button" class="btn btn-secondary" onclick="toggleFilter('Fighter')">Fighter</button>
+        <button type="button" class="btn btn-secondary" onclick="toggleFilter('Mage')">Mage</button>
+        <button type="button" class="btn btn-secondary" onclick="toggleFilter('Marksman')">Marksman</button>
+        <button type="button" class="btn btn-secondary" onclick="toggleFilter('Support')">Support</button>
+        <button type="button" class="btn btn-secondary" onclick="toggleFilter('Tank')">Tank</button>
+    </div>
 </div>
+
 <div class="container">
     <div class="row">
         <div class="col-lg-2 col-md-3 col-sm-5" th:each="entry: ${championsData}" data-classes="${entry.value.tags}">
@@ -82,6 +86,11 @@
     function toggleFilter(tag) {
         if (tag === 'All') {
             selectedTags = [];
+            // Remove the "active" class from all buttons
+            var buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
         } else {
             var index = selectedTags.indexOf(tag);
             if (index !== -1) {
@@ -94,15 +103,17 @@
         var filteredChampions = filterByTags(selectedTags);
         displayChampions(filteredChampions);
 
-        // Highlight selected buttons
-        var buttons = document.querySelectorAll('.class-button');
+        // Highlight selected buttons using the "active" class
+        var buttons = document.querySelectorAll('.btn');
         buttons.forEach(button => {
-            button.classList.remove('selected');
             if (selectedTags.includes(button.textContent)) {
-                button.classList.add('selected');
+                button.classList.add('active');
+            } else {
+                button.classList.remove('active');
             }
         });
     }
+
 
     displayChampions(championsArray);
 

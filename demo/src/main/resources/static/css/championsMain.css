@@ -14,11 +14,6 @@ body {
     margin-right: 10px;
 }
 
-.btn.selected {
-    background-color: #4CAF50;
-    color: white;
-}
-
 .champion {
     text-align: center;
     background-color: navajowhite;
@@ -58,9 +53,15 @@ body {
     color: #555;
 }
 
+#myInput{
+    width: 220px;
+}
 #searchResultsContainer{
+    width: 220px;
+    text-align: center;
     position: absolute;
     background-color: #1c1c1c;
+    z-index: 1;
 }
 
 .searchStyle a{
