@@ -3,16 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${profile.gameName}+'#'+${profile.tagLine}"></title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/infoProfile.css}">
     <div th:replace="~{fragments/navbar :: navbar}"></div>
-<!--                <p th:text="${profile.puuid}"></p>-->
-<!--                <p th:text="${summoner.accountId}"></p>-->
-<!--                <p th:text="${summoner.revisionDate}"></p>-->
-<!--                <p th:text="${summoner.id}"></p>-->
-<!--    "skillshotsDodged": 6,
-                    "skillshotsHit": 9,-->
 </head>
 <body>
 
@@ -23,24 +16,7 @@
         </div>
 
         <div class="col-md-10 bg-secondary">
-            <div class="row">
-                <div class="col-auto">
-                    <div class="d-flex flex-column align-items-center">
-                        <img th:src="${'http://ddragon.leagueoflegends.com/cdn/13.24.1/img/profileicon/'+summoner.profileIconId+'.png'}" class="img-fluid" alt="Profile Icon" style="max-width: 100%">
-                        <p th:text="'Level:'+${summoner.summonerLevel}" class="text-white"></p>
-                    </div>
-                </div>
-
-                <div class="col-md-8">
-                    <h1 th:text="${profile.gameName}+'#'+${profile.tagLine}"></h1>
-                    <h3 th:text="'Ex: '+${summoner.name}"></h3>
-                </div>
-            </div>
-            <div>
                 <h1>Match history:</h1>
-
-                <!-- Pętla Thymeleaf dla każdego meczu -->
-                <div th:each="match, iterStat : ${matches}" class="match-container">
                     <div class="container">
                         <div class="row">
                             <div class="col-md-auto">
@@ -54,10 +30,6 @@
                                         <h1 th:text="${match.info.participants[0].kills + ' / ' + match.info.participants[0].deaths + ' / ' + match.info.participants[0].assists}"></h1>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="col-md-auto d-flex align-items-center">
-                                <a th:href="@{'/profiles/match?matchId=' + ${match.info.gameId}}" class="btn btn-primary">Zobacz mecz</a>
                             </div>
 
                             <div class="col-md-auto">
