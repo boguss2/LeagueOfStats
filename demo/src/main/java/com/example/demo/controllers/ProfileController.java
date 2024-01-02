@@ -8,10 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class ProfileController {
@@ -30,14 +33,21 @@ public class ProfileController {
         Profile profile = apiService.fetchPlayerId(server, tag, name);
         Summoner summoner = apiService.fetchSummoner(server, profile.getPuuid());
         List<String> matchHistory = apiService.fetchMatchHistory(server, profile.getPuuid());
-        for(String match:matchHistory){
+        List<Match> matches = matchHistory.stream()
+                .map(match -> apiService.fetchMatch(server, match))
+                .collect(Collectors.toList());
 
-        }
-        Match match = apiService.fetchMatch(server, matchHistory.get(0));
         model.addAttribute("profile", profile);
         model.addAttribute("summoner", summoner);
         model.addAttribute("matchHistory", matchHistory);
-        model.addAttribute("match", match);
+        model.addAttribute("matches", matches);
         return "infoProfile";
+    }
+
+    @GetMapping("/profiles/match")
+    public String matchInfo(Model model, @ModelAttribute("match") Match match){
+
+        model.addAttribute("match", match);
+        return "matchInfo";
     }
 }

@@ -18,7 +18,7 @@ import java.util.List;
 @Service
 public class ApiService{
     private final RestTemplate restTemplate;
-    private final String key="RGAPI-b55882aa-52eb-4e2e-be2f-c44da2b8a855";
+    private final String key="RGAPI-fe3bd2eb-a6fd-4cd6-9ddc-d494cf4ed667";
     @Autowired
     public ApiService(RestTemplate restTemplate){
         this.restTemplate = restTemplate;
@@ -64,7 +64,7 @@ public class ApiService{
         String regionName="europe";
 
         //trzeba ogarnac dzialanie wartosci z tej tabeli(typy itd) zeby nauczyc sie dodawac query
-        String apiUrl="https://"+regionName+".api.riotgames.com/lol/match/v5/matches/by-puuid/"+puuid+"/ids?start=0&count=20&api_key="+key;
+        String apiUrl="https://"+regionName+".api.riotgames.com/lol/match/v5/matches/by-puuid/"+puuid+"/ids?start=0&count=5&api_key="+key;
         return restTemplate.getForObject(apiUrl, List.class);
     }
 
