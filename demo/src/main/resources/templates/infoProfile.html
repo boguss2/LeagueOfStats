@@ -45,14 +45,16 @@
                         <div class="row">
                             <div class="col-md-auto">
                                 <div class="position-relative align-bottom text-white d-flex flex-column align-items-center">
-                                    <img th:src="${'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/' + match.info.participants[0].championName + '_' + 0 + '.jpg'}"
+                                    <img th:src="${'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/' + match.info.participants[__${iterStat.index}__].championName + '_' + 0 + '.jpg'}"
                                          class="w-100 h-100"
                                          alt="Your Image"
                                          style="max-width: 500px; width: 100%;">
                                     <div class="position-absolute top-50 start-50 translate-middle text-center">
-                                        <h3 th:text="${match.info.participants[0].championName}"></h3>
-                                        <h1 th:text="${match.info.participants[0].kills + ' / ' + match.info.participants[0].deaths + ' / ' + match.info.participants[0].assists}"></h1>
+                                        <h3 th:text="${match.info.participants[__${iterStat.index}__].championName}"></h3>
+                                        <h1 th:text="${match.info.participants[__${iterStat.index}__].kills + ' / ' + match.info.participants[__${iterStat.index}__].deaths + ' / ' + match.info.participants[__${iterStat.index}__].assists}"></h1>
                                     </div>
+
+
                                 </div>
                             </div>
 
@@ -87,6 +89,8 @@
                     </div>
                 </div>
                 <!-- Koniec pętli Thymeleaf -->
+
+
             </div>
         </div>
 
@@ -95,6 +99,43 @@
         </div>
     </div>
 </div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    document.addEventListener('DOMContentLoaded', function () {
+        var matches = /*[[${matches}]]*/ [];  // Pobierz dane z modelu Thymeleaf
+
+        matches.forEach(function (match, matchIndex) {
+            var summonerIndex = null;  // Indeks właściciela konta w danym meczu (null oznacza brak)
+
+            match.info.participants.forEach(function (participant, participantIndex) {
+                if (participant.puuid === /*[[${summoner.puuid}]]*/ '') {
+                    // Znaleziono właściciela konta (summonera)
+                    summonerIndex = participantIndex;
+                    // Tutaj możesz wykonywać operacje dla właściciela konta
+                }
+            });
+
+            // Dodaj do listy wskaźników na mecz i odpowiadające im identyfikatory uczestników
+            var matchSummary = {
+                matchNumber: matchIndex + 1,
+                participantIndex: summonerIndex
+            };
+
+            console.log('Mecz:', matchSummary);
+            // Tutaj możesz użyć matchSummary zgodnie z Twoimi potrzebami
+
+            // Dodaj matchSummary do listy, aby później przekazać ją do backendu lub użyć na stronie
+            // np. Możesz użyć tablicy, która będzie trzymać wszystkie matchSummary
+        });
+    });
+    /*]]>*/
+</script>
+
+
+
+
+
 
 </body>
 </html>
