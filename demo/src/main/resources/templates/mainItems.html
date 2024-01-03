@@ -16,27 +16,27 @@
 <div class="container" style="margin-bottom: 10px">
     <input type="text" id="myInput" oninput="filterNames()" placeholder="Search for items..">
     <div class="searchStyle" id="searchResultsContainer"></div>
-    
+
     <div class="btn-group" role="group" aria-label="Item Categories">
-        <button type="button" class="btn btn-secondary" onclick="toggleFilter('All')">Clear</button>
-        <button type="button" class="btn btn-secondary" onclick="toggleFilter('Damage')">Attack Damage</button>
-        <button type="button" class="btn btn-secondary" onclick="toggleFilter('CriticalStrike')">Critical Strike</button>
-        <button type="button" class="btn btn-secondary" onclick="toggleFilter('AttackSpeed')">Attack Speed</button>
-        <button type="button" class="btn btn-secondary" onclick="toggleFilter('OnHit')">On-Hit Effects</button>
-        <button type="button" class="btn btn-secondary" onclick="toggleFilter('ArmorPenetration')">Armor Penetration</button>
-        <button type="button" class="btn btn-secondary" onclick="toggleFilter('SpellDamage')">Ability Power</button>
-        <button type="button" class="btn btn-secondary" onclick="toggleFilter('Mana')">Mana</button>
-        <button type="button" class="btn btn-secondary" onclick="toggleFilter('ManaRegen')">Mana Regeneration</button>
-        <button type="button" class="btn btn-secondary" onclick="toggleFilter('MagicPenetration')">Magic Penetration</button>
-        <button type="button" class="btn btn-secondary" onclick="toggleFilter('Health')">Health</button>
-        <button type="button" class="btn btn-secondary" onclick="toggleFilter('HealthRegen')">Health Regeneration</button>
-        <button type="button" class="btn btn-secondary" onclick="toggleFilter('Armor')">Armor</button>
-        <button type="button" class="btn btn-secondary" onclick="toggleFilter('MagicResist')">Magic Resistance</button>
-        <button type="button" class="btn btn-secondary" onclick="toggleFilter('AbilityHaste')">Ability Haste</button>
-        <button type="button" class="btn btn-secondary" onclick="toggleFilter('LifeSteal')">Life Steal</button>
-        <button type="button" class="btn btn-secondary" onclick="toggleFilter('SpellVamp')">Spell Vamp</button>
-        <button type="button" class="btn btn-secondary" onclick="toggleFilter('NonbootsMovement')">Movement</button>
-        <button type="button" class="btn btn-secondary" onclick="toggleFilter('Boots')">Boots</button>
+        <button type="button" class="btn btn-secondary" data-filter="All" onclick="toggleFilter(this)">Clear</button>
+        <button type="button" class="btn btn-secondary" data-filter="Damage" onclick="toggleFilter(this)">Attack Damage</button>
+        <button type="button" class="btn btn-secondary" data-filter="CriticalStrike" onclick="toggleFilter(this)">Critical Strike</button>
+        <button type="button" class="btn btn-secondary" data-filter="AttackSpeed" onclick="toggleFilter(this)">Attack Speed</button>
+        <button type="button" class="btn btn-secondary" data-filter="OnHit" onclick="toggleFilter(this)">On-Hit Effects</button>
+        <button type="button" class="btn btn-secondary" data-filter="ArmorPenetration" onclick="toggleFilter(this)">Armor Penetration</button>
+        <button type="button" class="btn btn-secondary" data-filter="SpellDamage" onclick="toggleFilter(this)">Ability Power</button>
+        <button type="button" class="btn btn-secondary" data-filter="Mana" onclick="toggleFilter(this)">Mana</button>
+        <button type="button" class="btn btn-secondary" data-filter="ManaRegen" onclick="toggleFilter(this)">Mana Regeneration</button>
+        <button type="button" class="btn btn-secondary" data-filter="MagicPenetration" onclick="toggleFilter(this)">Magic Penetration</button>
+        <button type="button" class="btn btn-secondary" data-filter="Health" onclick="toggleFilter(this)">Health</button>
+        <button type="button" class="btn btn-secondary" data-filter="HealthRegen" onclick="toggleFilter(this)">Health Regeneration</button>
+        <button type="button" class="btn btn-secondary" data-filter="Armor" onclick="toggleFilter(this)">Armor</button>
+        <button type="button" class="btn btn-secondary" data-filter="MagicResist" onclick="toggleFilter(this)">Magic Resistance</button>
+        <button type="button" class="btn btn-secondary" data-filter="AbilityHaste" onclick="toggleFilter(this)">Ability Haste</button>
+        <button type="button" class="btn btn-secondary" data-filter="LifeSteal" onclick="toggleFilter(this)">Life Steal</button>
+        <button type="button" class="btn btn-secondary" data-filter="SpellVamp" onclick="toggleFilter(this)">Spell Vamp</button>
+        <button type="button" class="btn btn-secondary" data-filter="NonbootsMovement" onclick="toggleFilter(this)">Movement</button>
+        <button type="button" class="btn btn-secondary" data-filter="Boots" onclick="toggleFilter(this)">Boots</button>
     </div>
 </div>
 
@@ -73,7 +73,7 @@
 
         items.forEach(item => {
             var colDiv = document.createElement("div");
-            colDiv.classList.add("col-lg-3", "col-md-4", "col-sm-6");
+            colDiv.classList.add("col-lg-2", "col-md-4", "col-sm-6");
 
             var itemDiv = document.createElement("div");
             itemDiv.classList.add("item");
@@ -95,7 +95,9 @@
         });
     }
 
-    function toggleFilter(tag) {
+    function toggleFilter(button) {
+        var tag = button.getAttribute('data-filter');
+
         if (tag === 'All') {
             selectedTags = [];
         } else {
@@ -110,11 +112,13 @@
         var filteredItems = filterByTags(selectedTags);
         displayItems(filteredItems);
 
-        var buttons = document.querySelectorAll('.class-button');
-        buttons.forEach(button => {
-            button.classList.remove('selected');
-            if (selectedTags.includes(button.textContent)) {
-                button.classList.add('selected');
+        var buttons = document.querySelectorAll('.btn');
+        buttons.forEach(btn => {
+            var btnTag = btn.getAttribute('data-filter');
+            if (selectedTags.includes(btnTag)) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
             }
         });
     }
@@ -181,5 +185,6 @@
     }
     /*]]>*/
 </script>
+<script th:src="@{/webjars/bootstrap/5.3.0/js/bootstrap.min.js}"></script>
 </body>
 </html>
