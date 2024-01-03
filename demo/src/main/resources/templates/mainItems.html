@@ -9,38 +9,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Items List</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/css/itemsMain.css}">
-    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <link rel="stylesheet" th:href="@{/css/mainItems.css}">
 </head>
-<body>
-<input type="text" id="myInput" oninput="filterNames()" placeholder="Search for items..">
-<button class="class-button" onclick="toggleFilter('All')">Clear</button>
-<button class="class-button" onclick="toggleFilter('Damage')">Attack Damage</button>
-<button class="class-button" onclick="toggleFilter('CriticalStrike')">Critical Strike</button>
-<button class="class-button" onclick="toggleFilter('AttackSpeed')">Attack Speed</button>
-<button class="class-button" onclick="toggleFilter('OnHit')">On-Hit Effects</button>
-<button class="class-button" onclick="toggleFilter('ArmorPenetration')">Armor Penetration</button>
-<button class="class-button" onclick="toggleFilter('SpellDamage')">Ability Power</button>
-<button class="class-button" onclick="toggleFilter('Mana')">Mana</button>
-<button class="class-button" onclick="toggleFilter('ManaRegen')">Mana Regeneration</button>
-<button class="class-button" onclick="toggleFilter('MagicPenetration')">Magic Penetration</button>
-<button class="class-button" onclick="toggleFilter('Health')">Health</button>
-<button class="class-button" onclick="toggleFilter('HealthRegen')">Health Regeneration</button>
-<button class="class-button" onclick="toggleFilter('Armor')">Armor</button>
-<button class="class-button" onclick="toggleFilter('MagicResist')">Magic Resistance</button>
-<button class="class-button" onclick="toggleFilter('AbilityHaste')">Ability Haste</button>
-<button class="class-button" onclick="toggleFilter('LifeSteal')">Life Steal</button>
-<button class="class-button" onclick="toggleFilter('SpellVamp')">Spell Vamp</button>
-<button class="class-button" onclick="toggleFilter('NonbootsMovement')">Movement</button>
-<button class="class-button" onclick="toggleFilter('Boots')">Boots</button>
-
-<div id="searchResultsContainer"></div>
+<body class="vh-100">
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+<div class="container" style="margin-bottom: 10px">
+    <input type="text" id="myInput" oninput="filterNames()" placeholder="Search for items..">
+    <div class="searchStyle" id="searchResultsContainer"></div>
+    
+    <div class="btn-group" role="group" aria-label="Item Categories">
+        <button type="button" class="btn btn-secondary" onclick="toggleFilter('All')">Clear</button>
+        <button type="button" class="btn btn-secondary" onclick="toggleFilter('Damage')">Attack Damage</button>
+        <button type="button" class="btn btn-secondary" onclick="toggleFilter('CriticalStrike')">Critical Strike</button>
+        <button type="button" class="btn btn-secondary" onclick="toggleFilter('AttackSpeed')">Attack Speed</button>
+        <button type="button" class="btn btn-secondary" onclick="toggleFilter('OnHit')">On-Hit Effects</button>
+        <button type="button" class="btn btn-secondary" onclick="toggleFilter('ArmorPenetration')">Armor Penetration</button>
+        <button type="button" class="btn btn-secondary" onclick="toggleFilter('SpellDamage')">Ability Power</button>
+        <button type="button" class="btn btn-secondary" onclick="toggleFilter('Mana')">Mana</button>
+        <button type="button" class="btn btn-secondary" onclick="toggleFilter('ManaRegen')">Mana Regeneration</button>
+        <button type="button" class="btn btn-secondary" onclick="toggleFilter('MagicPenetration')">Magic Penetration</button>
+        <button type="button" class="btn btn-secondary" onclick="toggleFilter('Health')">Health</button>
+        <button type="button" class="btn btn-secondary" onclick="toggleFilter('HealthRegen')">Health Regeneration</button>
+        <button type="button" class="btn btn-secondary" onclick="toggleFilter('Armor')">Armor</button>
+        <button type="button" class="btn btn-secondary" onclick="toggleFilter('MagicResist')">Magic Resistance</button>
+        <button type="button" class="btn btn-secondary" onclick="toggleFilter('AbilityHaste')">Ability Haste</button>
+        <button type="button" class="btn btn-secondary" onclick="toggleFilter('LifeSteal')">Life Steal</button>
+        <button type="button" class="btn btn-secondary" onclick="toggleFilter('SpellVamp')">Spell Vamp</button>
+        <button type="button" class="btn btn-secondary" onclick="toggleFilter('NonbootsMovement')">Movement</button>
+        <button type="button" class="btn btn-secondary" onclick="toggleFilter('Boots')">Boots</button>
+    </div>
+</div>
 
 <div class="container">
     <div class="row">
         <div class="col-lg-3 col-md-4 col-sm-6" th:each="entry: ${itemsData}" data-classes="${entry.value.tags}">
             <div class="item" data-tags="${entry.value.tags}">
-                <img id="itemImage" th:src="${'https://ddragon.leagueoflegends.com/cdn/'+ version +'/img/item/' + entry.value.image.full}">
+                <img id="itemImage" class="item-icon" th:src="${'https://ddragon.leagueoflegends.com/cdn/'+ version +'/img/item/' + entry.value.image.full}">
                 <a class="item-name" th:text="${entry.value.name}" th:href="@{'/items/' + ${entry.value.name}}"></a>
             </div>
         </div>
