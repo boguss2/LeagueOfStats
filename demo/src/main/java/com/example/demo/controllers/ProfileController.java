@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 public class ProfileController {
@@ -35,16 +36,23 @@ public class ProfileController {
         List<Match> matches = matchHistory.stream()
                 .map(match -> apiService.fetchMatch(server, match))
                 .collect(Collectors.toList());
+        List<Integer> ownerIndex = IntStream.range(0, matches.size())
+                .filter(index -> matches.get(index).getInfo().getParticipants().equals(profile.getPuuid()))
+                .boxed()
+                .collect(Collectors.toList());
+
 
         model.addAttribute("profile", profile);
         model.addAttribute("summoner", summoner);
         model.addAttribute("matchHistory", matchHistory);
         model.addAttribute("matches", matches);
+        model.addAttribute("ownerIndex", ownerIndex);
         return "infoProfile";
     }
 
-    @GetMapping("/profiles/match")
-    public String matchInfo(Model model, @ModelAttribute("match") Match match){
+    @GetMapping("/profiles/match/{server}/{matchId}")
+    public String matchInfo(Model model, @PathVariable String matchId, @PathVariable String server){
+        Match match = apiService.fetchMatch(server, matchId);
 
         model.addAttribute("match", match);
         return "infoMatch";
