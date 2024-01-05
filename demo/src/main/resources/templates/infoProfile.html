@@ -90,7 +90,11 @@
                 </div>
                 <!-- Koniec pętli Thymeleaf -->
 
-
+                <ul>
+                    <li th:each="index : ${ownerIndex}">
+                        <p th:text="${index}"></p>
+                    </li>
+                </ul>
             </div>
         </div>
 
