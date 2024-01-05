@@ -58,11 +58,20 @@ public class ProfileController {
         return "infoProfile";
     }
 
-    @GetMapping("/profiles/match/{server}/{matchId}")
-    public String matchInfo(Model model, @PathVariable String matchId, @PathVariable String server){
+    @GetMapping("/profiles/match/{server}/{puuid}/{matchId}")
+    public String matchInfo(Model model,@PathVariable String puuid ,@PathVariable String matchId, @PathVariable String server){
         Match match = apiService.fetchMatch(server, matchId);
+        int oId = 0;
+        int i=0;
+        for(String id : match.getMetadata().getParticipants()){
+            i++;
+            if(id.equals(puuid)){
+                oId=i;
+            }
+        }
 
         model.addAttribute("match", match);
+        model.addAttribute("ownderIndex", oId);
         return "infoMatch";
     }
 }
