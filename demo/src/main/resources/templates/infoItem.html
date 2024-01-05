@@ -8,7 +8,29 @@
 </head>
 <body class="vh-100 overflow-hidden">
 <div th:replace="~{fragments/navbar :: navbar}"></div>
-<div class="container">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-1 bg-primary">
+            <p>Left Column</p>
+        </div>
+
+        <div class="col-md-10 bg-secondary">
+            <div class="row">
+                    <div class="d-flex flex-column align-items-center">
+
+    <style>
+        .item-container {
+            display: flex;
+        }
+
+        .item-container img {
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+
+
+
     <img id="img" th:src="${'https://static.bigbrain.gg/assets/lol/riot_static/'+version+'/img/item/' + itemImage.full}">
     <h1 th:text="${itemData.name}"></h1>
     <p th:text="${itemData.plaintext}"></p>
@@ -40,25 +62,37 @@
     </script>
 
     <p th:text="${itemData.tags}"></p>
-
-    <div th:if="${itemData.from}">
-        <div th:each="item : ${itemData.from}">
-            <p th:text="${item}"></p>
-        </div>
-    </div>
-    <div th:unless="${itemData.from}">
-        <p>No items to build from.</p>
-    </div>
-
+                        <div th:if="${itemData.from}">
+                            <p>Builds from:</p>
+                            <div class="item-container">
+                                <div th:each="item : ${itemData.from}">
+                                    <img th:src="${'https://static.bigbrain.gg/assets/lol/riot_static/'+version+'/img/item/' + item + '.png'}">
+                                </div>
+                            </div>
+                        </div>
+                        <div th:unless="${itemData.from}">
+                            <p>No items to build from.</p>
+                        </div>
     <div th:if="${itemData.into}">
-        <div th:each="intoItem : ${itemData.into}">
-            <p th:text="${intoItem}"></p>
+        <p>Builds into:</p>
+        <div class="item-container">
+            <div th:each="intoItem : ${itemData.into}">
+                <img th:src="${'https://static.bigbrain.gg/assets/lol/riot_static/'+version+'/img/item/' + intoItem + '.png'}">
+            </div>
         </div>
     </div>
     <div th:unless="${itemData.into}">
         <p>No items to build into.</p>
     </div>
+                    </div>
+                </div>
 
+
+            </div>
+
+        <div class="col-md-1 bg-success">
+            <p>Right Column</p>
+        </div>
 </div>
 <script th:src="@{/js/mainChampions.js}" defer></script>
 <script th:src="@{/webjars/bootstrap/5.3.0/js/bootstrap.min.js}"></script>

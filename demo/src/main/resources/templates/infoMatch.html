@@ -16,7 +16,6 @@
         </div>
 
         <div class="col-md-10 bg-secondary">
-                <h1>Match history:</h1>
                     <div class="container">
                         <div class="row">
                             <div class="col-md-auto">
@@ -57,16 +56,21 @@
                             </div>
                         </div>
                     </div>
+            <div>
+                <div class="col-md-auto">
+                    <div class="position-relative align-bottom text-white d-flex flex-column align-items-center">
+                        <div th:each="match, iterStat : ${match.info.participants}">
+                        </div>
+                    </div>
                 </div>
-                <!-- Koniec pętli Thymeleaf -->
             </div>
-        </div>
-
+            </div>
         <div class="col-md-1 bg-success">
             <p>Right Column</p>
         </div>
     </div>
 </div>
+
 
 </body>
 </html>
