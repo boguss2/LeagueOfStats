@@ -1,11 +1,38 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--pingi, staty, itemy, gold, objectivy, dmg dealt,timeCCingOthers, win,  -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/infoProfile.css}">
     <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7.1.1"></script>
+
+    <style>
+
+        .header {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            display: inline-block;
+        }
+
+        .victory {
+            background-color: green;
+            color: white;
+        }
+
+        .defeat {
+            background-color: red;
+            color: white;
+        }
+
+        /* Add more styles as needed */
+    </style>
+
 </head>
 <body>
 
@@ -18,15 +45,20 @@
         <div class="col-md-10 bg-secondary">
                     <div class="container">
                         <div class="row">
-                            <div class="col-md-auto">
+                            <div th:if="${match}" class="d-flex align-items-center justify-content-center">
+                                <div th:class="${match.info.participants[ownderIndex - 1].win ? 'header victory' : 'header defeat'}">
+                                    <span th:text="${match.info.participants[ownderIndex - 1].win ? 'Victory' : 'Defeat'}"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-auto mb-2">
                                 <div class="position-relative align-bottom text-white d-flex flex-column align-items-center">
-                                    <img th:src="${'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/' + match.info.participants[0].championName + '_' + 0 + '.jpg'}"
+                                    <img th:src="${'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/' + match.info.participants[ownderIndex - 1].championName + '_' + 0 + '.jpg'}"
                                          class="w-100 h-100"
                                          alt="Your Image"
                                          style="max-width: 500px; width: 100%;">
                                     <div class="position-absolute top-50 start-50 translate-middle text-center">
-                                        <h3 th:text="${match.info.participants[0].championName}"></h3>
-                                        <h1 th:text="${match.info.participants[0].kills + ' / ' + match.info.participants[0].deaths + ' / ' + match.info.participants[0].assists}"></h1>
+                                        <h3 th:text="${match.info.participants[ownderIndex - 1].championName}"></h3>
+                                        <h1 th:text="${match.info.participants[ownderIndex - 1].kills + ' / ' + match.info.participants[ownderIndex - 1].deaths + ' / ' + match.info.participants[ownderIndex - 1].assists}"></h1>
                                     </div>
                                 </div>
                             </div>
@@ -57,12 +89,109 @@
                         </div>
                     </div>
             <div>
-                <div class="col-md-auto">
+                <div class="row">
+                    <div class="col-md-6">
+                        <table>
+                            <tbody>
+                            <tr th:each="row : ${#numbers.sequence(0, 1)}">
+                                <td th:each="col : ${#numbers.sequence(0, 2)}">
+                                    <div class="position-relative align-bottom text-white d-flex flex-column align-items-center">
+                                        <img id="img" th:src="${'https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/' + match.info.participants[ownderIndex - 1]['item' + (row * 3 + col)] + '.png'}"
+                                             th:unless="${match.info.participants[ownderIndex - 1]['item' + (row * 3 + col)] == 0}">
+                                        <img  th:src="@{/backgrounds/Yuumi_0.jpg}" th:if="${match.info.participants[ownderIndex - 1]['item' + (row * 3 + col)] == 0}"
+                                             alt="Empty Box Image">
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <p th:text="'Gold earned: ' + ${match.info.participants[ownderIndex - 1].goldEarned}"></p>
+                    </div>
+
+                <div class="col-md-6">
                     <div class="position-relative align-bottom text-white d-flex flex-column align-items-center">
-                        <div th:each="match, iterStat : ${match.info.participants}">
-                        </div>
+                        <p th:text="'Barons slain: ' + ${match.info.participants[ownderIndex - 1].baronKills}"></p>
+                        <p th:text="'Dragons slain: ' + ${match.info.participants[ownderIndex - 1].dragonKills}"></p>
+                        <p th:text="'Turrets destroyed: ' + ${match.info.participants[ownderIndex - 1].turretTakedowns}"></p>
                     </div>
                 </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="position-relative align-bottom text-white d-flex flex-column align-items-center">
+                            <h3>Damage Dealt Breakdown</h3>
+                            <svg id="chart-container" width="400" height="200"></svg>
+
+                            <script th:inline="javascript">
+                                var trueDamage = /*[[${match.info.participants[ownderIndex - 1].trueDamageDealtToChampions}]]*/ {};
+                                var totalDamage = /*[[${match.info.participants[ownderIndex - 1].totalDamageDealtToChampions}]]*/ {};
+                                var magicDamage = /*[[${match.info.participants[ownderIndex - 1].magicDamageDealtToChampions}]]*/ {};
+                                var physicalDamage = /*[[${match.info.participants[ownderIndex - 1].physicalDamageDealtToChampions}]]*/ {};
+
+                                // D3.js code to create a simple bar chart
+                                var data = [trueDamage, totalDamage, magicDamage, physicalDamage];
+                                var names = ["True", "Total", "Magic", "Physical"];
+                                var colors = ["white", "gray", "#74EBF1", "#E76F53"];
+
+                                var svg = d3.select("#chart-container");
+
+                                var scale = d3.scaleLinear().domain([0, d3.max(data)]).range([0, 200]);
+
+                                // Set a minimum height for the bars
+                                var minHeight = 0;
+
+                                svg.selectAll("rect")
+                                    .data(data)
+                                    .enter()
+                                    .append("rect")
+                                    .attr("x", function(d, i) { return i * 80; })
+                                    .attr("y", function(d) { return 200 - Math.max(minHeight, scale(d)); }) // Use Math.max to ensure a minimum height
+                                    .attr("width", 75)
+                                    .attr("height", function(d) { return Math.max(minHeight, scale(d)); })
+                                    .attr("fill", function(d, i) { return colors[i]; });
+
+                                // Adding text inside each bar
+                                svg.selectAll("text")
+                                    .data(data)
+                                    .enter()
+                                    .append("text")
+                                    .text(function(d, i) { return names[i] + ": " + d; })
+                                    .attr("x", function(d, i) { return i * 80 + 38; })
+                                    .attr("y", function(d) { return Math.min(200, 200 - Math.max(minHeight, scale(d)) + 15); }) // Adjusted positioning logic
+                                    .attr("text-anchor", "middle")
+                                    .attr("fill", "black")
+                                    .style("font-size", "12px");
+
+                                // Adding type labels below each bar
+                                svg.selectAll("type-label")
+                                    .data(names)
+                                    .enter()
+                                    .append("text")
+                                    .text(function(d) { return d; })
+                                    .attr("x", function(d, i) { return i * 80 + 38; })
+                                    .attr("y", 220)
+                                    .attr("text-anchor", "middle")
+                                    .attr("fill", "black")
+                                    .style("font-size", "12px");
+                            </script>
+
+
+
+
+                        </div>
+                    </div>
+                <div class="col-md-6">
+                    <div class="position-relative align-bottom text-white d-flex flex-column align-items-center">
+                        <p th:text="'Used Q spell: ' + ${match.info.participants[ownderIndex - 1].spell1Casts} + ' times'"></p>
+                        <p th:text="'Used W spell: ' + ${match.info.participants[ownderIndex - 1].spell2Casts} + ' times'"></p>
+                        <p th:text="'Used E spell: ' + ${match.info.participants[ownderIndex - 1].spell3Casts} + ' times'"></p>
+                        <p th:text="'Used R spell: ' + ${match.info.participants[ownderIndex - 1].spell4Casts} + ' times'"></p>
+                        <p th:text="'Pinged ? : ' + ${match.info.participants[ownderIndex - 1].enemyMissingPings} + ' times'"></p>
+                        <p th:text="'Crowd Controlled: ' + ${match.info.participants[ownderIndex - 1].totalTimeCCDealt} +' times for: ' +  ${match.info.participants[ownderIndex - 1].timeCCingOthers} + ' seconds'"></p>
+                        <p th:text="'Time spent dead: ' + ${match.info.participants[ownderIndex - 1].totalTimeSpentDead}"></p>
+                    </div>
+                </div>
+                    </div>
             </div>
             </div>
         <div class="col-md-1 bg-success">

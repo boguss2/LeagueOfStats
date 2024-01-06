@@ -51,7 +51,7 @@
                             </div>
 
                             <div class="col-md-auto d-flex align-items-center">
-                                <a th:href="@{'/profiles/match/' + ${server} + '/' + ${match.metadata.matchId} + '?ownerIndex=' + ${ownerIndex[iterStat.index]-1}}" class="btn btn-primary">Zobacz mecz</a>
+                                <a th:href="@{'/profiles/match/' + ${server} + '/' + ${summoner.puuid} + '/' + ${match.metadata.matchId}}" class="btn btn-primary">Zobacz mecz</a>
                             </div>
 
 

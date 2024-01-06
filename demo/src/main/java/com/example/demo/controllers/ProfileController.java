@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import java.util.Arrays;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -70,6 +71,10 @@ public class ProfileController {
             }
         }
 
+        List<Integer> chartData = Arrays.asList(50, 80, 120, 160, 200);
+
+        // Add data to the model
+        model.addAttribute("chartData", chartData);
         model.addAttribute("match", match);
         model.addAttribute("ownderIndex", oId);
         return "infoMatch";

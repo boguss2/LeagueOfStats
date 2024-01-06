@@ -31,7 +31,7 @@
 
 
 
-    <img id="img" th:src="${'https://static.bigbrain.gg/assets/lol/riot_static/'+version+'/img/item/' + itemImage.full}">
+    <img id="img" th:src="${'https://ddragon.leagueoflegends.com/cdn/'+version+'/img/item/' + itemImage.full}">
     <h1 th:text="${itemData.name}"></h1>
     <p th:text="${itemData.plaintext}"></p>
     <p th:text="${itemGold.total}"></p>
@@ -66,7 +66,7 @@
                             <p>Builds from:</p>
                             <div class="item-container">
                                 <div th:each="item : ${itemData.from}">
-                                    <img th:src="${'https://static.bigbrain.gg/assets/lol/riot_static/'+version+'/img/item/' + item + '.png'}">
+                                    <img th:src="${'https://ddragon.leagueoflegends.com/cdn/'+version+'/img/item/' + item + '.png'}">
                                 </div>
                             </div>
                         </div>
@@ -77,7 +77,7 @@
         <p>Builds into:</p>
         <div class="item-container">
             <div th:each="intoItem : ${itemData.into}">
-                <img th:src="${'https://static.bigbrain.gg/assets/lol/riot_static/'+version+'/img/item/' + intoItem + '.png'}">
+                <img th:src="${'https://ddragon.leagueoflegends.com/cdn/'+version+'/img/item/' + intoItem + '.png'}">
             </div>
         </div>
     </div>
