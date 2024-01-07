@@ -1,0 +1,18 @@
+body {
+    background-color: #1c1c1c;
+    color: #ffffff;
+
+}
+@media (max-width: 991px) {
+    .sidebar {
+        background-color: rgba(0, 0, 0, 0.091);
+        backdrop-filter: blur(9px);
+    }
+}
+
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

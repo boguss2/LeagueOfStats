@@ -22,6 +22,9 @@ body {
     overflow-x: hidden;
 }
 
+.blurred-background {
+    backdrop-filter: blur(3px);
+}
 
 .vs {
     overflow-y: hidden;
@@ -115,4 +118,65 @@ th, td {
     height: auto;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.lore-box{
+    max-width: 700px;
+    border-width: 0.3rem;
+    border-color: rgba(227, 197, 55, 0.89);
+    border-style: outset;
+    outline: 0.3rem outset khaki;
+    padding: 30px;
+    margin-top: 40px;
+    margin-bottom: 0.6rem;
+}
+
+.lore-box2 {
+    max-width: 500px;
+    border-width: 0.3rem;
+    border-color: rgba(47, 19, 19, 0.89);
+    border-style: outset;
+    outline: 0.3rem outset rgba(245, 2, 65, 0.2);
+    padding: 30px;
+    margin-bottom: 40px;
+    display: flex;
+}
+
+.lore-box2 .left {
+    text-align: center;
+    flex: 1;
+}
+
+.lore-box2 .right {
+    text-align: center;
+    flex: 1;
+}
+
+.item-container {
+    box-shadow: rgba(130, 142, 155, 0.32) 0px 0px 0px 2px, rgba(159, 171, 183, 0.56) 0px 4px 6px -1px, rgba(255, 255, 255, 0.45) 0px 1px 0px inset;
+    text-align: center;
+    padding: 10px 30px 10px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    border-radius: 30px;
+    display: flex;
+}
+
+.item-image {
+    width: 100px;
+    height: 100px;
+    margin: 20px 10px;
+}
+
+.item-box1 {
+    box-shadow: rgba(130, 142, 155, 0.32) 0px 0px 0px 2px, rgba(159, 171, 183, 0.56) 0px 4px 6px -1px, rgba(255, 255, 255, 0.45) 0px 1px 0px inset;
+    text-align: center;
+    padding: 10px 30px 30px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    border-radius: 30px;
+}
+
+.item-h5{
+    margin-bottom: 40px;
 }

@@ -46,3 +46,7 @@ body {
     color: red;
     font-weight: bold;
 }
+
+.btn-group{
+    width: 100%;
+}

@@ -42,7 +42,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-3 col-md-4 col-sm-6" th:each="entry: ${itemsData}" data-classes="${entry.value.tags}">
+        <div class="col-lg-2 col-md-4 col-sm-6" th:each="entry: ${itemsData}" data-classes="${entry.value.tags}">
             <div class="item" data-tags="${entry.value.tags}">
                 <img id="itemImage" class="item-icon" th:src="${'https://ddragon.leagueoflegends.com/cdn/'+ version +'/img/item/' + entry.value.image.full}">
                 <a class="item-name" th:text="${entry.value.name}" th:href="@{'/items/' + ${entry.value.name}}"></a>
@@ -73,7 +73,7 @@
 
         items.forEach(item => {
             var colDiv = document.createElement("div");
-            colDiv.classList.add("col-lg-2", "col-md-4", "col-sm-6");
+            colDiv.classList.add("col-lg-2", "col-md-4", "col-sm-4");
 
             var itemDiv = document.createElement("div");
             itemDiv.classList.add("item");

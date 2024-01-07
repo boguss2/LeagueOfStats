@@ -1,99 +1,76 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<!--    kolorki flavor text, tabelka na staty, row col-md-->
+    <!-- kolorki flavor text, tabelka na staty, row col-md -->
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/Champions.css}">
 </head>
-<body class="vh-100 overflow-hidden">
+<body class="vh-100">
 <div th:replace="~{fragments/navbar :: navbar}"></div>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-1 bg-primary">
-            <p>Left Column</p>
-        </div>
+<div class="container">
+            <div class="d-flex flex-column align-items-center">
+                <div class="item-box1">
+                <img class="item-image" id="img" th:src="${'https://ddragon.leagueoflegends.com/cdn/' + version + '/img/item/' + itemImage.full}">
+                <h1 th:text="${itemData.name}"></h1>
+                </div>
+                <h5 class="item-h5" th:text="${itemData.plaintext}"></h5>
+                <h6>Cost:</h6>
+                <p th:text="${itemGold.total} + ' gold'"></p>
+                <span style="padding-bottom: 30px" id="formattedOutput" th:attr="data=${itemData.description}"></span>
 
-        <div class="col-md-10 bg-secondary">
-            <div class="row">
-                    <div class="d-flex flex-column align-items-center">
+                <script>
+                    function formatOutput(inputText) {
+                        const attentionPattern = /<attention>(.*?)<\/attention>/g;
+                        const activePattern = /<active>(.*?)<\/active>/g;
+                        const passivePattern = /<passive>(.*?)<\/passive>/g;
+                        const rarityMythicPattern = /<rarityMythic>(.*?)<\/rarityMythic>/g;
+                        const rarityLegendaryPattern = /<rarityLegendary>(.*?)<\/rarityLegendary>/g;
 
-    <style>
-        .item-container {
-            display: flex;
-        }
+                        inputText = inputText.replace(attentionPattern, '<b>$1</b>');
+                        inputText = inputText.replace(activePattern, '<i>$1</i>');
+                        // Additional formatting for other elements if needed
 
-        .item-container img {
-            margin-right: 10px;
-            margin-bottom: 10px;
-        }
-    </style>
+                        return inputText;
+                    }
 
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const formattedOutputElement = document.getElementById('formattedOutput');
+                        const itemDataDescription = formattedOutputElement.getAttribute('data');
+                        const formattedDescription = formatOutput(itemDataDescription);
+                        formattedOutputElement.innerHTML = formattedDescription;
+                    });
+                </script>
 
-
-    <img id="img" th:src="${'https://ddragon.leagueoflegends.com/cdn/'+version+'/img/item/' + itemImage.full}">
-    <h1 th:text="${itemData.name}"></h1>
-    <p th:text="${itemData.plaintext}"></p>
-    <p th:text="${itemGold.total}"></p>
-
-    <span id="formattedOutput" th:attr="data=${itemData.description}"></span>
-
-    <script>
-        function formatOutput(inputText) {
-            const attentionPattern = /<attention>(.*?)<\/attention>/g;
-            const activePattern = /<active>(.*?)<\/active>/g;
-            const passivePattern = /<passive>(.*?)<\/passive>/g;
-            const rarityMythicPattern = /<rarityMythic>(.*?)<\/rarityMythic>/g;
-            const rarityLegendaryPattern = /<rarityLegendary>(.*?)<\/rarityLegendary>/g;
-
-            inputText = inputText.replace(attentionPattern, '<b>$1</b>');
-            inputText = inputText.replace(activePattern, '<i>$1</i>');
-            // Additional formatting for other elements if needed
-
-            return inputText;
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const formattedOutputElement = document.getElementById('formattedOutput');
-            const itemDataDescription = formattedOutputElement.getAttribute('data');
-            const formattedDescription = formatOutput(itemDataDescription);
-            formattedOutputElement.innerHTML = formattedDescription;
-        });
-    </script>
-
-    <p th:text="${itemData.tags}"></p>
-                        <div th:if="${itemData.from}">
-                            <p>Builds from:</p>
-                            <div class="item-container">
-                                <div th:each="item : ${itemData.from}">
-                                    <img th:src="${'https://ddragon.leagueoflegends.com/cdn/'+version+'/img/item/' + item + '.png'}">
-                                </div>
-                            </div>
+                <div th:if="${itemData.from}">
+                    <h4 style="text-align: center">Builds from:</h4>
+                    <div class="item-container">
+                        <div th:each="item : ${itemData.from}">
+                            <img class="item-image" th:src="${'https://ddragon.leagueoflegends.com/cdn/' + version + '/img/item/' + item + '.png'}">
                         </div>
-                        <div th:unless="${itemData.from}">
-                            <p>No items to build from.</p>
-                        </div>
-    <div th:if="${itemData.into}">
-        <p>Builds into:</p>
-        <div class="item-container">
-            <div th:each="intoItem : ${itemData.into}">
-                <img th:src="${'https://ddragon.leagueoflegends.com/cdn/'+version+'/img/item/' + intoItem + '.png'}">
-            </div>
-        </div>
-    </div>
-    <div th:unless="${itemData.into}">
-        <p>No items to build into.</p>
-    </div>
                     </div>
                 </div>
 
+                <div th:unless="${itemData.from}" style="text-align: center">
+                    <h4>No items to build from.</h4>
+                </div>
 
+                <div th:if="${itemData.into}">
+                    <h4 style="text-align: center">Builds into:</h4>
+                    <div class="item-container">
+                        <div th:each="intoItem : ${itemData.into}">
+                            <img class="item-image" th:src="${'https://ddragon.leagueoflegends.com/cdn/' + version + '/img/item/' + intoItem + '.png'}">
+                        </div>
+                    </div>
+                </div>
+
+                <div th:unless="${itemData.into}">
+                    <h4 style="text-align: center">No items to build into.</h4>
+                </div>
             </div>
-
-        <div class="col-md-1 bg-success">
-            <p>Right Column</p>
-        </div>
 </div>
+
 <script th:src="@{/js/mainChampions.js}" defer></script>
 <script th:src="@{/webjars/bootstrap/5.3.0/js/bootstrap.min.js}"></script>
 </body>

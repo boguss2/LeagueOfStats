@@ -16,14 +16,17 @@
 </header>
 <body class="vh-100">
 <div th:replace="~{fragments/navbar :: navbar}"></div>
+<div class="container-fluid">
         <div class="row">
 
             <div id="presentation" class="col-md-12 d-flex justify-content-center">
                 <div class="position-relative align-bottom text-white">
                     <img th:src="${'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/' + championData.id + '_' + 0 + '.jpg'}" class="img-fluid w-100 h-100" alt="Your Image"> <!-- Replace 'your-image.jpg' with your image path -->
                     <div class="position-absolute top-50 start-50 translate-middle text-center">
-                        <h3 th:text="${championData.name}"></h3>
-                        <h1 th:text="${championData.title}"></h1>
+                        <div class="blurred-background">
+                            <h3 th:text="${championData.name}"></h3>
+                            <h1 th:text="${championData.title}"></h1>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -32,12 +35,40 @@
         <div class="row">
             <div id="contentL" class="col-md-2">
             </div>
-
             <div id="content" class="col-md-8">
+                <div class="lore-box mx-auto">
+                    <h4 th:text="${championData.lore}"></h4>
+                </div>
+                <div class="lore-box2 mx-auto">
+                    <div class="left" id="championTags">
+                        <h5>Type:</h5>
+                        <h4 th:text="${championData.tags}"></h4>
+                    </div>
+                    <div class="right">
+                        <h5>Resource:</h5>
+                        <h4 th:text="${championData.partype}"></h4>
+                    </div>
+                </div>
 
-                    <p th:text="${championData.lore}"></p>
-                    <div class="search-container">
-                        <label for="searchChampion">Search Champion:</label>
+                <script th:inline="javascript">
+                    document.addEventListener('DOMContentLoaded', function() {
+                        var h4Element = document.getElementById('championTags').querySelector('h4');
+
+                        if (h4Element) {
+                            var championTagsText = h4Element.textContent;
+
+                            var cleanTagsText = championTagsText.replace(/\[|\]/g, '');
+
+                            h4Element.textContent = cleanTagsText;
+                        }
+                    });
+                </script>
+
+
+
+
+                <div class="search-container">
+                        <label for="searchChampion">Search Champion to compare:</label>
                         <input type="text" id="searchChampion" oninput="filterChampions()" placeholder="Type to search...">
                     </div>
 
@@ -83,8 +114,7 @@
                     });
                 </script>
 
-                <p th:text="${championData.tags}"></p>
-                <p th:text="${championData.partype}"></p>
+
 
                 <label for="selectNumber">Select a level:</label>
                 <select id="selectNumber" name="selectNumber">
@@ -142,7 +172,7 @@
                         var titleCell = titleRow.insertCell(0);
                         titleCell.colSpan = 4; // Set colspan to cover all columns
                         titleCell.style.textAlign = "center";
-                        titleCell.innerHTML = "<strong>tabelka</strong>";
+                        titleCell.innerHTML = "<strong>Stats</strong>";
 
                         for (var key in championStats) {
                             // Check if the per level value is defined
@@ -198,7 +228,7 @@
                 </script>
 
                 <div id="spell" class="container">
-                    <h2>Spells</h2>
+                    <h2 class="my-4 text-center">Spells</h2>
                     <div class="row">
                         <div class="col-md-2 d-flex justify-content-center">
                             <label>
@@ -254,9 +284,11 @@
                     <!-- Iterujemy przez listę championSkins za pomocą Thymeleafa -->
                     <div th:each="skin, status : ${championSkins}" th:classappend="${status.index == 0} ? 'carousel-item active' : 'carousel-item'">
                         <img th:src="${'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/' + championData.id + '_' + skin.num + '.jpg'}" class="d-block w-100" alt="Champion Skin">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5 th:text="${championData.name}"></h5>
-                            <p th:text="${skin.name}"></p>
+                        <div class="carousel-caption">
+                            <div class="blurred-background">
+                                <h5 th:text="${championData.name}"></h5>
+                                <p th:text="${skin.name}"></p>
+                            </div>
                         </div>
                     </div>
 
@@ -272,6 +304,7 @@
                 </button>
             </div>
         </div>
+</div>
 
     <script th:src="@{/webjars/bootstrap/5.3.0/js/bootstrap.min.js}"></script>
 </body>

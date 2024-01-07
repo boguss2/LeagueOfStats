@@ -5,27 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Items List</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/css/championsMain.css}">
+    <link rel="stylesheet" th:href="@{/css/mainProfiles.css}">
     <div th:replace="~{fragments/navbar :: navbar}"></div>
 </head>
-<body>
+<body class="vh-100">
+<row></row>
+<div class="center">
+    <form id="searchForm" class="form-inline">
+        <label for="nick">Nick:</label>
+        <input type="text" id="nick" name="nick" required>
 
-<form id="searchForm">
-    <label for="nick">Nick:</label>
-    <input type="text" id="nick" name="nick" required>
+        <label for="tag">Tag:</label>
+        <input type="text" id="tag" name="tag" required>
 
-    <label for="tag">Tag:</label>
-    <input type="text" id="tag" name="tag" required>
+        <label for="server">Server:</label>
 
-    <label for="server">Server:</label>
-    <select id="server" name="server">
-        <option value="EUW" selected>EUW</option>
-        <option value="EUNE">EUNE</option>
-        <option value="NA">NA</option>
-    </select>
+        <select class="custom-select" id="server" name="server">
+            <option value="EUW" selected>EUW</option>
+            <option value="EUNE">EUNE</option>
+            <option value="NA">NA</option>
+        </select>
 
-    <button type="button" onclick="search()">Search</button>
-</form>
+
+        <button type="button" class="btn btn-secondary" onclick="search()">Search</button>
+    </form>
+</div>
 
 <script>
     function search() {
@@ -42,5 +46,6 @@
     }
 </script>
 
+<script th:src="@{/webjars/bootstrap/5.3.0/js/bootstrap.min.js}"></script>
 </body>
 </html>
