@@ -49,18 +49,53 @@ body {
     display: none;
     width: 100%;
     text-align: center;
+    align-items: center;
+    align-content: center;
     box-sizing: border-box;
+    padding-top: 12px;
 }
 
 .champion-icon-container:hover .champion-name {
     display: block;
+    height: 50px;
+    text-align: center;
+    backdrop-filter: blur(10px);
 }
 
 .profile-card{
     box-shadow: rgb(138, 34, 77) 0px 0px 0px 2px, rgb(32, 225, 11) 0px 4px 6px -1px, rgb(109, 215, 9) 0px 1px 0px inset;
-    text-align: center;
-    padding: 10px 30px 30px;
+    padding: 10px 30px 5px;
     margin-top: 40px;
     margin-bottom: 40px;
     border-radius: 30px;
+    max-width: 700px;
+}
+
+.lore-box3{
+    border-width: 0.3rem;
+    border-color: rgba(227, 197, 55, 0.89);
+    border-style: outset;
+    outline: 0.3rem outset khaki;
+    padding: 30px;
+    margin-bottom: 4rem;
+}
+
+.lore-box4{
+    max-width: 400px;
+    border-width: 0.3rem;
+    border-color: rgba(131, 71, 232, 0.89);
+    border-style: outset;
+    outline: 0.3rem outset #a6385d;
+    padding: 30px;
+    margin-bottom: 40px;
+}
+
+.lore-box5{
+    max-width: 500px;
+    border-width: 0.3rem;
+    border-color: rgba(96, 52, 171, 0.89);
+    border-style: outset;
+    outline: 0.3rem outset rgba(179, 107, 238, 0.73);
+    padding: 30px;
+    margin-bottom: 40px;
 }
