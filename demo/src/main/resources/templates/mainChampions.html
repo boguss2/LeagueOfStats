@@ -10,8 +10,6 @@
 <body class="vh-100">
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 <div class="container" style="margin-bottom: 10px">
-    <input type="text" id="myInput" oninput="filterNames()" placeholder="Search for champions..">
-    <div class="searchStyle" id="searchResultsContainer"></div>
 
     <div class="btn-group" role="group" aria-label="Champion Categories">
         <button type="button" class="btn btn-secondary" onclick="toggleFilter('All')">All</button>
@@ -21,6 +19,10 @@
         <button type="button" class="btn btn-secondary" onclick="toggleFilter('Marksman')">Marksman</button>
         <button type="button" class="btn btn-secondary" onclick="toggleFilter('Support')">Support</button>
         <button type="button" class="btn btn-secondary" onclick="toggleFilter('Tank')">Tank</button>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12" style="margin-top: 10px">
+    <input type="text" id="myInput" oninput="filterNames()" placeholder="Search for champions..">
+    <div class="searchStyle" id="searchResultsContainer"></div>
     </div>
 </div>
 

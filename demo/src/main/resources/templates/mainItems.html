@@ -14,10 +14,8 @@
 <body class="vh-100">
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 <div class="container" style="margin-bottom: 10px">
-    <input type="text" id="myInput" oninput="filterNames()" placeholder="Search for items..">
-    <div class="searchStyle" id="searchResultsContainer"></div>
-
-    <div class="btn-group" role="group" aria-label="Item Categories">
+    <row>
+    <div class="col-lg-12 col-md-12 col-sm-12 btn-group" role="group" aria-label="Item Categories">
         <button type="button" class="btn btn-secondary" data-filter="All" onclick="toggleFilter(this)">Clear</button>
         <button type="button" class="btn btn-secondary" data-filter="Damage" onclick="toggleFilter(this)">Attack Damage</button>
         <button type="button" class="btn btn-secondary" data-filter="CriticalStrike" onclick="toggleFilter(this)">Critical Strike</button>
@@ -38,6 +36,13 @@
         <button type="button" class="btn btn-secondary" data-filter="NonbootsMovement" onclick="toggleFilter(this)">Movement</button>
         <button type="button" class="btn btn-secondary" data-filter="Boots" onclick="toggleFilter(this)">Boots</button>
     </div>
+</row>
+    <row>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+    <input type="text" id="myInput" oninput="filterNames()" placeholder="Search for items.." style="margin-top: 10px">
+    <div class="searchStyle" id="searchResultsContainer"></div>
+    </div>
+    </row>
 </div>
 
 <div class="container">

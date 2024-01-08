@@ -89,13 +89,3 @@ body {
     padding: 30px;
     margin-bottom: 40px;
 }
-
-.lore-box5{
-    max-width: 500px;
-    border-width: 0.3rem;
-    border-color: rgba(96, 52, 171, 0.89);
-    border-style: outset;
-    outline: 0.3rem outset rgba(179, 107, 238, 0.73);
-    padding: 30px;
-    margin-bottom: 40px;
-}

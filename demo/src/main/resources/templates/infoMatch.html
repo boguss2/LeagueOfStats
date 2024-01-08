@@ -111,8 +111,20 @@
                 </div>
                 </div>
                 <div class="row" style="margin-top: 50px;">
-                    <div class="col-md-5 offset-md-1">
-                        <div class="position-relative align-bottom text-white d-flex flex-column align-items-center">
+        <div class="col-md-3 offset-md-1 d-flex align-items-center justify-content-center" style="margin-top: 50px;">
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-header bg-dark text-white">
+                                Spells Used
+                            </div>
+                            <ul class="list-group">
+                                <li class="list-group-item bg-gradient" th:text="'Used Q spell: ' + ${match.info.participants[ownderIndex - 1].spell1Casts} + ' times'"></li>
+                                <li class="list-group-item bg-gradient" th:text="'Used W spell: ' + ${match.info.participants[ownderIndex - 1].spell2Casts} + ' times'"></li>
+                                <li class="list-group-item bg-gradient" th:text="'Used E spell: ' + ${match.info.participants[ownderIndex - 1].spell3Casts} + ' times'"></li>
+                                <li class="list-group-item bg-gradient" th:text="'Used R spell: ' + ${match.info.participants[ownderIndex - 1].spell4Casts} + ' times'"></li>
+                            </ul>
+                        </div>
+        </div>
+                        <div class="col-md-4 position-relative align-bottom text-white d-flex flex-column align-items-center" style="margin-top: 50px;">
                             <h3>Damage Dealt Breakdown</h3>
                             <svg id="chart-container" width="400" height="200"></svg>
 
@@ -173,18 +185,21 @@
 
 
                         </div>
-                    </div>
-                <div class="col-md-5 d-grid align-items-center justify-content-center">
-                    <div class="lore-box5 position-relative align-bottom text-white d-flex flex-column align-items-center">
-                        <h5 th:text="'Used Q spell: ' + ${match.info.participants[ownderIndex - 1].spell1Casts} + ' times'"></h5>
-                        <h5 th:text="'Used W spell: ' + ${match.info.participants[ownderIndex - 1].spell2Casts} + ' times'"></h5>
-                        <h5 th:text="'Used E spell: ' + ${match.info.participants[ownderIndex - 1].spell3Casts} + ' times'"></h5>
-                        <h5 th:text="'Used R spell: ' + ${match.info.participants[ownderIndex - 1].spell4Casts} + ' times'"></h5>
-                        <h5 th:text="'Pinged ? : ' + ${match.info.participants[ownderIndex - 1].enemyMissingPings} + ' times'"></h5>
-                        <h5 th:text="'Crowd Controlled: ' + ${match.info.participants[ownderIndex - 1].totalTimeCCDealt} +' times for: ' +  ${match.info.participants[ownderIndex - 1].timeCCingOthers} + ' seconds'"></h5>
-                        <h5 th:text="'Time spent dead: ' + ${match.info.participants[ownderIndex - 1].totalTimeSpentDead}"></h5>
-                    </div>
-                </div>
+                        <div class="col-md-3 d-flex align-items-center justify-content-center" style="margin-top: 50px;">
+                        <div class="card" style="width: 18rem; ">
+                            <div class="card-header bg-dark text-white">
+                                Other Info
+                            </div>
+                            <ul class="list-group">
+                                <li class="list-group-item bg-gradient" th:text="'Pinged ? : ' + ${match.info.participants[ownderIndex - 1].enemyMissingPings} + ' times'"></li>
+                                <li class="list-group-item bg-gradient" th:text="'Crowd Controlled: ' + ${match.info.participants[ownderIndex - 1].totalTimeCCDealt} +' times for: ' +  ${match.info.participants[ownderIndex - 1].timeCCingOthers} + ' seconds'"></li>
+                                <li class="list-group-item bg-gradient" th:text="'Time spent dead: ' + ${match.info.participants[ownderIndex - 1].totalTimeSpentDead}"></li>
+                            </ul>
+                        </div>
+                        </div>
+
+
+
                     </div>
             </div>
             </div>
